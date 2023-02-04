@@ -40,6 +40,10 @@ exports.app.delete('/videos/:id', (req, res) => {
     videos = videos.filter((c) => c.id !== +req.params.id);
     res.sendStatus(204);
 });
+exports.app.delete('/videos', (req, res) => {
+    videos = [];
+    res.sendStatus(204);
+});
 exports.app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 });

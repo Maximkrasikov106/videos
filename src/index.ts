@@ -50,6 +50,13 @@ app.delete('/videos/:id', (req, res)=> {
 
 });
 
+app.delete('/videos', (req, res)=> {
+    videos =  [];
+
+    res.sendStatus(204)
+
+
+});
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
