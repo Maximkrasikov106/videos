@@ -23,8 +23,6 @@ app.post('/videos', (req, res)=> {
     const newVideo = {id: +Date.now(),title: req.body.title, author: req.body.author,
          canBeDownloaded: true,
          minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(),
          availableResolutions: req.body.availableResolutions
     }
     videos.push(newVideo)
