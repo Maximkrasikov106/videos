@@ -9,6 +9,12 @@ let videos:any = [];
 const parserMiddleware = bodyParser({});
 app.use(parserMiddleware);
 
+
+app.delete('/testing/all-data', (req, res)=> {
+    res.sendStatus(204)
+});
+
+
 app.get('/videos', (req, res)=> {
     res.status(200).send(videos);
 });
