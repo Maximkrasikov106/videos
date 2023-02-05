@@ -19,7 +19,7 @@ app.get('/videos', (req, res)=> {
     res.status(200).send(videos);
 });
 
-
+let errorsMessages:any = [];
 
 let createdAt = new Date()
 let publicationDate = new Date(createdAt.setDate(createdAt.getDate() + 1));
@@ -31,7 +31,9 @@ app.post('/videos', (req:Request<{},{},{
     minAgeRestriction: number,
     createdAt: string,
     publicationDate: string,
-    availableResolutions: string
+    availableResolutions: string,
+    message: string,
+    field: string
 }>, res: Response)=> {
     const newVideo = {
          id : +Date.now() ,
@@ -43,17 +45,21 @@ app.post('/videos', (req:Request<{},{},{
          publicationDate: publicationDate.toISOString(),
          availableResolutions: req.body.availableResolutions
     }
+    const errorMessage = {
+        message: req.body.message,
+        field: req.body.field
+    }
     let minAgeRestriction = req.body.minAgeRestriction
-    if (minAgeRestriction < 1 && minAgeRestriction > 18){
-        res.status(400).send(req.errored)
-        return
+    if (minAgeRestriction < 1 || minAgeRestriction > 18){
+        res.status(404).send(errorMessage)
+
     }
 
     if (newVideo){
         videos.push(newVideo)
         res.status(201).send(newVideo);
     }else {
-        res.status(404).send(req.errored)
+        res.status(404).send(errorMessage)
     }
 
 

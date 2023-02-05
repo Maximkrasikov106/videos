@@ -17,20 +17,34 @@ exports.app.delete('/testing/all-data', (req, res) => {
 exports.app.get('/videos', (req, res) => {
     res.status(200).send(videos);
 });
+let errorsMessages = [];
+let createdAt = new Date();
+let publicationDate = new Date(createdAt.setDate(createdAt.getDate() + 1));
 exports.app.post('/videos', (req, res) => {
-    const newVideo = { id: +Date.now(), title: req.body.title, author: req.body.author,
-        canBeDownloaded: true,
+    const newVideo = {
+        id: +Date.now(),
+        title: req.body.title,
+        author: req.body.author,
+        canBeDownloaded: false,
         minAgeRestriction: null,
-        createdAt: req.body.createdAt,
-        publicationDate: req.body.publicationDate,
+        createdAt: createdAt.toISOString(),
+        publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     };
+    const errorMessage = {
+        message: req.body.message,
+        field: req.body.field
+    };
+    let minAgeRestriction = req.body.minAgeRestriction;
+    if (minAgeRestriction < 1 || minAgeRestriction > 18) {
+        res.status(404).send(errorMessage);
+    }
     if (newVideo) {
         videos.push(newVideo);
         res.status(201).send(newVideo);
     }
     else {
-        res.status(404).send(req.errored);
+        res.status(404).send(errorMessage);
     }
 });
 exports.app.get('/videos/:id', (req, res) => {
