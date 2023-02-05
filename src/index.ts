@@ -51,7 +51,8 @@ app.post('/videos', (req:Request<{},{},{
     }
     let minAgeRestriction = req.body.minAgeRestriction
     if (minAgeRestriction < 1 || minAgeRestriction > 18){
-        res.status(404).send(errorMessage)
+        errorsMessages.push(errorMessage)
+        res.status(404).send(errorsMessages)
 
     }
 
@@ -59,6 +60,7 @@ app.post('/videos', (req:Request<{},{},{
         videos.push(newVideo)
         res.status(201).send(newVideo);
     }else {
+        errorsMessages.push(errorMessage)
         res.status(404).send(errorMessage)
     }
 
