@@ -19,14 +19,40 @@ app.get('/videos', (req, res)=> {
     res.status(200).send(videos);
 });
 
-app.post('/videos', (req, res)=> {
-    const newVideo = {id: +Date.now(),title: req.body.title, author: req.body.author,
-         canBeDownloaded: true,
-         minAgeRestriction: null,
+app.post('/videos', (req:Request<{},{},{
+    title: string,
+    author:string,
+    canBeDownloaded: boolean,
+    minAgeRestriction: number,
+    createdAt: string,
+    publicationDate: string,
+    availableResolutions: string
+}>, res: Response)=> {
+    const newVideo = {
+         id : +Date.now() ,
+         title: req.body.title,
+         author: req.body.author,
+         canBeDownloaded: false,
+         minAgeRestriction: req.body.minAgeRestriction,
+         createdAt: req.body.createdAt,
+         publicationDate: req.body.publicationDate,
          availableResolutions: req.body.availableResolutions
     }
-    videos.push(newVideo)
-    res.status(201).send(newVideo);
+    let minAgeRestriction = req.body.minAgeRestriction
+    if (minAgeRestriction < 1 && minAgeRestriction > 18){
+        res.status(400).send(req.errored)
+        return
+    }
+
+    if (newVideo){
+        videos.push(newVideo)
+        res.status(201).send(newVideo);
+    }else {
+        res.status(404).send(req.errored)
+    }
+
+
+
 })
 
 app.get('/videos/:id', (req, res)=> {

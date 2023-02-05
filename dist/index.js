@@ -21,12 +21,17 @@ exports.app.post('/videos', (req, res) => {
     const newVideo = { id: +Date.now(), title: req.body.title, author: req.body.author,
         canBeDownloaded: true,
         minAgeRestriction: null,
-        createdAt: new Date().toISOString(),
-        publicationDate: new Date().toISOString(),
+        createdAt: req.body.createdAt,
+        publicationDate: req.body.publicationDate,
         availableResolutions: req.body.availableResolutions
     };
-    videos.push(newVideo);
-    res.status(201).send(newVideo);
+    if (newVideo) {
+        videos.push(newVideo);
+        res.status(201).send(newVideo);
+    }
+    else {
+        res.status(404).send(req.errored);
+    }
 });
 exports.app.get('/videos/:id', (req, res) => {
     const video = videos.find((c) => c.id === +req.params.id);
