@@ -20,9 +20,9 @@ app.get('/videos', (req, res)=> {
 });
 
 let errorsMessages:any = [];
-
 let createdAt = new Date()
-let publicationDate = new Date(createdAt.setDate(createdAt.getDate() + 1));
+let publicationDate = new Date()
+publicationDate.setDate(publicationDate.getDate() + 1)
 
 app.post('/videos', (req:Request<{},{},{
     title: string,
