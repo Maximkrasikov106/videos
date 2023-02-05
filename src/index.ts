@@ -19,6 +19,8 @@ app.get('/videos', (req, res)=> {
     res.status(200).send(videos);
 });
 
+let publicationDate = new Date();
+publicationDate.setDate(publicationDate.getDate() + parseInt('1'))
 app.post('/videos', (req:Request<{},{},{
     title: string,
     author:string,
@@ -33,9 +35,9 @@ app.post('/videos', (req:Request<{},{},{
          title: req.body.title,
          author: req.body.author,
          canBeDownloaded: false,
-         minAgeRestriction: req.body.minAgeRestriction,
-         createdAt: req.body.createdAt,
-         publicationDate: req.body.publicationDate,
+         minAgeRestriction: null,
+         createdAt: new Date().toISOString(),
+         publicationDate: publicationDate.toISOString(),
          availableResolutions: req.body.availableResolutions
     }
     let minAgeRestriction = req.body.minAgeRestriction
