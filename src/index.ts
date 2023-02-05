@@ -46,43 +46,38 @@ app.post('/videos', (req:Request<{},{},{
          availableResolutions: req.body.availableResolutions
     }
 
+    let errorsArray: Array<object> = [];
+    let errorMessage = {errorsMessages: errorsArray}
 
-    const errorMessage = {
-        errorsMessages: [
-            {
-                message: 'eror',
-                field: 'erroror'
-            }
-        ]
-    }
+    const err = {message: "er", find: "err"}
 
     if (req.body.title == null){
 
-        res.status(400).send(errorMessage)
+        res.status(400).send(errorsArray.push(err))
         return;
     }
 
     let minAgeRestriction = req.body.minAgeRestriction
     if ( (minAgeRestriction < 1 || minAgeRestriction > 18)){
 
-        res.status(400).send(errorMessage)
+        res.status(400).send(errorsArray.push(err))
         return;
     }
 
     if (req.body.title.length > 40){
 
-        res.status(400).send(errorMessage)
+        res.status(400).send(errorsArray.push(err))
         return;
     }
 
     if (req.body.author.length > 20){
 
-        res.status(400).send(errorMessage)
+        res.status(400).send(errorsArray.push(err))
         return;
     }
     if (req.body.availableResolutions.length < 1){
 
-        res.status(400).send(errorMessage)
+        res.status(400).send(errorsArray.push(err))
         return;
     }
 
@@ -92,7 +87,7 @@ app.post('/videos', (req:Request<{},{},{
         return;
     }else {
 
-        res.status(400).send(errorMessage)
+        res.status(400).send(errorsArray.push(err))
         return;
     }
 

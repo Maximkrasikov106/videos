@@ -31,33 +31,28 @@ exports.app.post('/videos', (req, res) => {
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     };
-    const errorMessage = {
-        errorsMessages: [
-            {
-                message: 'eror',
-                field: 'erroror'
-            }
-        ]
-    };
+    let errorsArray = [];
+    let errorMessage = { errorsMessages: errorsArray };
+    const err = { message: "er", find: "err" };
     if (req.body.title == null) {
-        res.status(400).send(errorMessage);
+        res.status(400).send(errorsArray.push(err));
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;
     if ((minAgeRestriction < 1 || minAgeRestriction > 18)) {
-        res.status(400).send(errorMessage);
+        res.status(400).send(errorsArray.push(err));
         return;
     }
     if (req.body.title.length > 40) {
-        res.status(400).send(errorMessage);
+        res.status(400).send(errorsArray.push(err));
         return;
     }
     if (req.body.author.length > 20) {
-        res.status(400).send(errorMessage);
+        res.status(400).send(errorsArray.push(err));
         return;
     }
     if (req.body.availableResolutions.length < 1) {
-        res.status(400).send(errorMessage);
+        res.status(400).send(errorsArray.push(err));
         return;
     }
     if (newVideo) {
@@ -66,7 +61,7 @@ exports.app.post('/videos', (req, res) => {
         return;
     }
     else {
-        res.status(400).send(errorMessage);
+        res.status(400).send(errorsArray.push(err));
         return;
     }
 });
