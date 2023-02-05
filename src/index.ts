@@ -90,21 +90,8 @@ app.post('/videos', (req:Request<{},{},{
 
 })
 
-app.get('/videos/:id', (req:Request<{
-    id: number;
-},{},{
-    id: string,
-    title: string,
-    author:string,
-    canBeDownloaded: boolean,
-    minAgeRestriction: number,
-    createdAt: string,
-    publicationDate: string,
-    availableResolutions: string,
-    message: string,
-    field: string
-}>, res:Response)=> {
-    const video =  videos.find((c: { id: number; }) => c.id === req.params.id)
+app.get('/videos/:id', (req, res)=> {
+    const video =  videos.find((c: { id: number; }) => c.id === +req.params.id)
     if (!video){
         res.sendStatus(404)
         return
@@ -114,7 +101,19 @@ app.get('/videos/:id', (req:Request<{
 
 });
 
-app.put('/videos/:id', (req, res)=> {
+app.put('/videos/:id', (req:Request<{
+    id: number;
+},{},{
+    title: string,
+    author:string,
+    canBeDownloaded: boolean,
+    minAgeRestriction: number,
+    createdAt: string,
+    publicationDate: string,
+    availableResolutions: string,
+    message: string,
+    field: string,
+}>, res: Response)=> {
     const video = videos.find((c: { id: number; }) => c.id === +req.params.id)
     if (!video){
         res.sendStatus(404)
