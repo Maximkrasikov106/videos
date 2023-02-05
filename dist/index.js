@@ -36,6 +36,10 @@ exports.app.post('/videos', (req, res) => {
         message: 'eror',
         field: 'erroror'
     };
+    if (req.body.title === null) {
+        errorsMessages.push(errorMessage);
+        res.status(400).send(errorsMessages);
+    }
     let minAgeRestriction = req.body.minAgeRestriction;
     if ((minAgeRestriction < 1 || minAgeRestriction > 18)) {
         errorsMessages.push(errorMessage);
@@ -63,7 +67,7 @@ exports.app.post('/videos', (req, res) => {
     }
 });
 exports.app.get('/videos/:id', (req, res) => {
-    const video = videos.find((c) => c.id === +req.params.id);
+    const video = videos.find((c) => c.id === req.params.id);
     if (!video) {
         res.sendStatus(404);
         return;
@@ -76,8 +80,15 @@ exports.app.put('/videos/:id', (req, res) => {
         res.sendStatus(404);
         return;
     }
-    video.title = req.body.title;
-    res.status(204).send(video);
+    if (video) {
+        video.title = req.body.title;
+        video.author = req.body.author;
+        video.availableResolutions = req.body.availableResolutions;
+        video.canBeDownloaded = req.body.canBeDownloaded;
+        video.minAgeRestriction = req.body.minAgeRestriction;
+        video.publicationDate = req.body.publicationDate;
+        res.status(204);
+    }
 });
 exports.app.delete('/videos/:id', (req, res) => {
     videos = videos.filter((c) => c.id !== +req.params.id);
