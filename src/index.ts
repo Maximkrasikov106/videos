@@ -45,10 +45,18 @@ app.post('/videos', (req:Request<{},{},{
          publicationDate: publicationDate.toISOString(),
          availableResolutions: req.body.availableResolutions
     }
+
+
     const errorMessage = {
         message: 'eror',
         field: 'erroror'
     }
+
+    if (req.body.title === null){
+        errorsMessages.push(errorMessage)
+        res.status(400).send(errorsMessages)
+    }
+
     let minAgeRestriction = req.body.minAgeRestriction
     if ( (minAgeRestriction < 1 || minAgeRestriction > 18)){
         errorsMessages.push(errorMessage)
