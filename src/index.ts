@@ -19,7 +19,7 @@ app.get('/videos', (req: Request, res: Response)=> {
     res.status(200).send(videos);
 });
 
-let errorsMessages:any = [];
+
 let createdAt = new Date()
 let publicationDate = new Date()
 publicationDate.setDate(publicationDate.getDate() +1);
@@ -53,32 +53,32 @@ app.post('/videos', (req:Request<{},{},{
     }
 
     if (req.body.title == null){
-        errorsMessages.push(errorMessage)
-        res.status(400).send(errorsMessages)
+
+        res.status(400).send(errorMessage)
         return;
     }
 
     let minAgeRestriction = req.body.minAgeRestriction
     if ( (minAgeRestriction < 1 || minAgeRestriction > 18)){
-        errorsMessages.push(errorMessage)
-        res.status(400).send(errorsMessages)
+
+        res.status(400).send(errorMessage)
         return;
     }
 
     if (req.body.title.length > 40){
-        errorsMessages.push(errorMessage)
-        res.status(400).send(errorsMessages)
+
+        res.status(400).send(errorMessage)
         return;
     }
 
     if (req.body.author.length > 20){
-        errorsMessages.push(errorMessage)
-        res.status(400).send(errorsMessages)
+
+        res.status(400).send(errorMessage)
         return;
     }
     if (req.body.availableResolutions.length < 1){
-        errorsMessages.push(errorMessage)
-        res.status(400).send(errorsMessages)
+
+        res.status(400).send(errorMessage)
         return;
     }
 
@@ -87,7 +87,7 @@ app.post('/videos', (req:Request<{},{},{
         res.status(201).send(newVideo);
         return;
     }else {
-        errorsMessages.push(errorMessage)
+
         res.status(400).send(errorMessage)
         return;
     }
