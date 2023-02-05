@@ -37,7 +37,19 @@ exports.app.post('/videos', (req, res) => {
         field: 'erroror'
     };
     let minAgeRestriction = req.body.minAgeRestriction;
-    if (minAgeRestriction < 1 || minAgeRestriction > 18) {
+    if ((minAgeRestriction < 1 || minAgeRestriction > 18)) {
+        errorsMessages.push(errorMessage);
+        res.status(400).send(errorsMessages);
+    }
+    if (req.body.title.length > 40) {
+        errorsMessages.push(errorMessage);
+        res.status(400).send(errorsMessages);
+    }
+    if (req.body.author.length > 20) {
+        errorsMessages.push(errorMessage);
+        res.status(400).send(errorsMessages);
+    }
+    if (req.body.availableResolutions.length < 1) {
         errorsMessages.push(errorMessage);
         res.status(400).send(errorsMessages);
     }
