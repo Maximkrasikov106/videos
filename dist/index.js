@@ -20,7 +20,6 @@ exports.app.get('/videos', (req, res) => {
 let errorsMessages = [];
 let createdAt = new Date();
 let publicationDate = new Date();
-publicationDate.setDate(publicationDate.getDate() + 1);
 exports.app.post('/videos', (req, res) => {
     const newVideo = {
         id: +Date.now(),
@@ -33,7 +32,7 @@ exports.app.post('/videos', (req, res) => {
         availableResolutions: req.body.availableResolutions
     };
     const errorMessage = {
-        message: 'erorr',
+        message: 'eror',
         field: 'erroror'
     };
     let minAgeRestriction = req.body.minAgeRestriction;
