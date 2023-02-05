@@ -46,7 +46,7 @@ app.post('/videos', (req:Request<{},{},{
          availableResolutions: req.body.availableResolutions
     }
     const errorMessage = {
-        message: 'eror',
+        message: 'erorr',
         field: 'erroror'
     }
     let minAgeRestriction = req.body.minAgeRestriction
