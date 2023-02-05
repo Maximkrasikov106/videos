@@ -36,28 +36,28 @@ exports.app.post('/videos', (req, res) => {
     };
     if (req.body.title == null) {
         errorsArray.push(err);
-        res.status(400).send(errorMessage);
+        res.status(400).json(errorMessage);
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;
     if ((minAgeRestriction < 1 || minAgeRestriction > 18)) {
         errorsArray.push(err);
-        res.status(400).send();
+        res.status(400).json(errorMessage);
         return;
     }
     if (req.body.title.length > 40) {
         errorsArray.push(err);
-        res.status(400).send(errorMessage);
+        res.status(400).json(errorMessage);
         return;
     }
     if (req.body.author.length > 20) {
         errorsArray.push(err);
-        res.status(400).send(errorMessage);
+        res.status(400).json(errorMessage);
         return;
     }
     if (req.body.availableResolutions.length < 1) {
         errorsArray.push(err);
-        res.status(400).send(errorMessage);
+        res.status(400).json(errorMessage);
         return;
     }
     if (newVideo) {
@@ -67,7 +67,7 @@ exports.app.post('/videos', (req, res) => {
     }
     else {
         errorsArray.push(err);
-        res.status(400).send(errorMessage);
+        res.status(400).json(errorMessage);
         return;
     }
 });
