@@ -138,8 +138,8 @@ app.put('/videos/:id', (req:Request<{
 });
 
 app.delete('/videos/:id', (req, res)=> {
-     videos =  videos.filter((c: { id: number; }) => c.id !== +req.params.id)
-    if(!videos){
+     let AllVideo =  videos.filter((c: { id: number; }) => c.id !== +req.params.id)
+    if(AllVideo === videos){
         res.sendStatus(404)
         return
     }
