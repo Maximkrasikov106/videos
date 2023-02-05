@@ -32,19 +32,21 @@ exports.app.post('/videos', (req, res) => {
         availableResolutions: req.body.availableResolutions
     };
     const errorMessage = {
-        message: req.body.message,
-        field: req.body.field
+        message: 'eror',
+        field: 'eroror'
     };
     let minAgeRestriction = req.body.minAgeRestriction;
     if (minAgeRestriction < 1 || minAgeRestriction > 18) {
-        res.status(404).send(errorMessage);
+        errorsMessages.push(errorMessage);
+        res.status(400).send(errorsMessages);
     }
     if (newVideo) {
         videos.push(newVideo);
         res.status(201).send(newVideo);
     }
     else {
-        res.status(404).send(errorMessage);
+        errorsMessages.push(errorMessage);
+        res.status(400).send(errorMessage);
     }
 });
 exports.app.get('/videos/:id', (req, res) => {

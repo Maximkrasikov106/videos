@@ -46,13 +46,13 @@ app.post('/videos', (req:Request<{},{},{
          availableResolutions: req.body.availableResolutions
     }
     const errorMessage = {
-        message: req.body.message,
-        field: req.body.field
+        message: 'eror',
+        field: 'erroror'
     }
     let minAgeRestriction = req.body.minAgeRestriction
     if (minAgeRestriction < 1 || minAgeRestriction > 18){
         errorsMessages.push(errorMessage)
-        res.status(404).send(errorsMessages)
+        res.status(400).send(errorsMessages)
 
     }
 
@@ -61,7 +61,7 @@ app.post('/videos', (req:Request<{},{},{
         res.status(201).send(newVideo);
     }else {
         errorsMessages.push(errorMessage)
-        res.status(404).send(errorMessage)
+        res.status(400).send(errorMessage)
     }
 
 
