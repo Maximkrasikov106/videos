@@ -20,6 +20,9 @@ exports.app.get('/videos', (req, res) => {
 let createdAt = new Date();
 let publicationDate = new Date();
 publicationDate.setDate(publicationDate.getDate() + 1);
+let errorsArray = [];
+let errorMessage = { errorsMessages: errorsArray };
+const err = { message: "er", find: "err" };
 exports.app.post('/videos', (req, res) => {
     const newVideo = {
         id: +Date.now(),
@@ -31,28 +34,30 @@ exports.app.post('/videos', (req, res) => {
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     };
-    let errorsArray = [];
-    let errorMessage = { errorsMessages: errorsArray };
-    const err = { message: "er", find: "err" };
     if (req.body.title == null) {
-        res.status(400).send(errorsArray.push(err));
+        errorsArray.push(err);
+        res.status(400).send(errorMessage);
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;
     if ((minAgeRestriction < 1 || minAgeRestriction > 18)) {
-        res.status(400).send(errorsArray.push(err));
+        errorsArray.push(err);
+        res.status(400).send();
         return;
     }
     if (req.body.title.length > 40) {
-        res.status(400).send(errorsArray.push(err));
+        errorsArray.push(err);
+        res.status(400).send(errorMessage);
         return;
     }
     if (req.body.author.length > 20) {
-        res.status(400).send(errorsArray.push(err));
+        errorsArray.push(err);
+        res.status(400).send(errorMessage);
         return;
     }
     if (req.body.availableResolutions.length < 1) {
-        res.status(400).send(errorsArray.push(err));
+        errorsArray.push(err);
+        res.status(400).send(errorMessage);
         return;
     }
     if (newVideo) {
@@ -61,7 +66,8 @@ exports.app.post('/videos', (req, res) => {
         return;
     }
     else {
-        res.status(400).send(errorsArray.push(err));
+        errorsArray.push(err);
+        res.status(400).send(errorMessage);
         return;
     }
 });
