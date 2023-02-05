@@ -36,7 +36,7 @@ exports.app.post('/videos', (req, res) => {
         message: 'eror',
         field: 'erroror'
     };
-    if (req.body.title === null) {
+    if (req.body.title == null) {
         errorsMessages.push(errorMessage);
         res.status(400).send(errorsMessages);
         return;
@@ -98,11 +98,12 @@ exports.app.put('/videos/:id', (req, res) => {
     }
 });
 exports.app.delete('/videos/:id', (req, res) => {
-    videos = videos.filter((c) => c.id !== +req.params.id);
-    if (!videos) {
+    let AllVideo = videos.filter((c) => c.id !== +req.params.id);
+    if (AllVideo.length == videos.length) {
         res.sendStatus(404);
         return;
     }
+    videos = AllVideo;
     res.sendStatus(204);
 });
 exports.app.delete('/videos', (req, res) => {

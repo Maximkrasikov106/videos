@@ -52,7 +52,7 @@ app.post('/videos', (req:Request<{},{},{
         field: 'erroror'
     }
 
-    if (req.body.title === null){
+    if (req.body.title == null){
         errorsMessages.push(errorMessage)
         res.status(400).send(errorsMessages)
         return;
@@ -139,10 +139,11 @@ app.put('/videos/:id', (req:Request<{
 
 app.delete('/videos/:id', (req, res)=> {
      let AllVideo =  videos.filter((c: { id: number; }) => c.id !== +req.params.id)
-    if(AllVideo === videos){
+    if(AllVideo.length == videos.length){
         res.sendStatus(404)
         return
     }
+    videos = AllVideo
     res.sendStatus(204)
 
 
