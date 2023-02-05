@@ -17,7 +17,6 @@ exports.app.delete('/testing/all-data', (req, res) => {
 exports.app.get('/videos', (req, res) => {
     res.status(200).send(videos);
 });
-let errorsMessages = [];
 let createdAt = new Date();
 let publicationDate = new Date();
 publicationDate.setDate(publicationDate.getDate() + 1);
@@ -33,33 +32,32 @@ exports.app.post('/videos', (req, res) => {
         availableResolutions: req.body.availableResolutions
     };
     const errorMessage = {
-        message: 'eror',
-        field: 'erroror'
+        errorsMessages: [
+            {
+                message: 'eror',
+                field: 'erroror'
+            }
+        ]
     };
     if (req.body.title == null) {
-        errorsMessages.push(errorMessage);
-        res.status(400).send(errorsMessages);
+        res.status(400).send(errorMessage);
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;
     if ((minAgeRestriction < 1 || minAgeRestriction > 18)) {
-        errorsMessages.push(errorMessage);
-        res.status(400).send(errorsMessages);
+        res.status(400).send(errorMessage);
         return;
     }
     if (req.body.title.length > 40) {
-        errorsMessages.push(errorMessage);
-        res.status(400).send(errorsMessages);
+        res.status(400).send(errorMessage);
         return;
     }
     if (req.body.author.length > 20) {
-        errorsMessages.push(errorMessage);
-        res.status(400).send(errorsMessages);
+        res.status(400).send(errorMessage);
         return;
     }
     if (req.body.availableResolutions.length < 1) {
-        errorsMessages.push(errorMessage);
-        res.status(400).send(errorsMessages);
+        res.status(400).send(errorMessage);
         return;
     }
     if (newVideo) {
@@ -68,7 +66,6 @@ exports.app.post('/videos', (req, res) => {
         return;
     }
     else {
-        errorsMessages.push(errorMessage);
         res.status(400).send(errorMessage);
         return;
     }

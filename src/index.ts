@@ -48,8 +48,12 @@ app.post('/videos', (req:Request<{},{},{
 
 
     const errorMessage = {
-        message: 'eror',
-        field: 'erroror'
+        errorsMessages: [
+            {
+                message: 'eror',
+                field: 'erroror'
+            }
+        ]
     }
 
     if (req.body.title == null){
