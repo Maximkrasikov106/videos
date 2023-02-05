@@ -55,35 +55,41 @@ app.post('/videos', (req:Request<{},{},{
     if (req.body.title === null){
         errorsMessages.push(errorMessage)
         res.status(400).send(errorsMessages)
+        return;
     }
 
     let minAgeRestriction = req.body.minAgeRestriction
     if ( (minAgeRestriction < 1 || minAgeRestriction > 18)){
         errorsMessages.push(errorMessage)
         res.status(400).send(errorsMessages)
-
+        return;
     }
 
     if (req.body.title.length > 40){
         errorsMessages.push(errorMessage)
         res.status(400).send(errorsMessages)
+        return;
     }
 
     if (req.body.author.length > 20){
         errorsMessages.push(errorMessage)
         res.status(400).send(errorsMessages)
+        return;
     }
     if (req.body.availableResolutions.length < 1){
         errorsMessages.push(errorMessage)
         res.status(400).send(errorsMessages)
+        return;
     }
 
     if (newVideo){
         videos.push(newVideo)
         res.status(201).send(newVideo);
+        return;
     }else {
         errorsMessages.push(errorMessage)
         res.status(400).send(errorMessage)
+        return;
     }
 
 
@@ -133,7 +139,10 @@ app.put('/videos/:id', (req:Request<{
 
 app.delete('/videos/:id', (req, res)=> {
      videos =  videos.filter((c: { id: number; }) => c.id !== +req.params.id)
-
+    if(!videos){
+        res.sendStatus(404)
+        return
+    }
     res.sendStatus(204)
 
 
