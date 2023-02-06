@@ -30,7 +30,7 @@ let errorsValue = 0;
 const err = {message: "er", find: "err"}
 
 app.post('/videos', (req:Request<{},{},{
-    title: string,
+    title: string ,
     author:string,
     canBeDownloaded: boolean,
     minAgeRestriction: number,
@@ -56,7 +56,8 @@ app.post('/videos', (req:Request<{},{},{
     if (req.body.title == null){
         errorsArray.push(err)
         errorsValue++
-
+        res.status(400).send({errorMessages: errorsArray})
+        return;
     }
 
     let minAgeRestriction = req.body.minAgeRestriction
