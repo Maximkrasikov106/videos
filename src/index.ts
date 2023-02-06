@@ -27,7 +27,7 @@ publicationDate.setDate(publicationDate.getDate() +1);
 let errorsArray: any = [];
 
 let errorsValue = 0;
-const err = {message: "er", field: "err"}
+
 
 app.post('/videos', (req:Request<{},{},{
     title: string ,
@@ -50,11 +50,11 @@ app.post('/videos', (req:Request<{},{},{
          publicationDate: publicationDate.toISOString(),
          availableResolutions: req.body.availableResolutions
     }
-
-
+    const errTitle = {message: "er", field: "title"}
+    const err = {message: "er", field: "title"}
 
     if (req.body.title == null){
-        errorsArray.push(err)
+        errorsArray.push(errTitle)
         errorsValue++
         res.status(400).json({errorMessages: errorsArray})
         return;
