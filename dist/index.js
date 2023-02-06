@@ -38,7 +38,7 @@ exports.app.post('/videos', (req, res) => {
     if (req.body.title == null) {
         errorsArray.push(errTitle);
         errorsValue++;
-        res.status(400).send({ errorMessages: errorsArray });
+        res.status(400).send({ errorsMessages: errorsArray });
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;

@@ -56,7 +56,7 @@ app.post('/videos', (req:Request<{},{},{
     if (req.body.title == null){
         errorsArray.push(errTitle)
         errorsValue++
-        res.status(400).send({errorMessages: errorsArray})
+        res.status(400).send({errorsMessages: errorsArray})
         return;
     }
 
