@@ -59,7 +59,7 @@ exports.app.post('/videos', (req, res) => {
         errorsValue++;
     }
     if (errorsValue > 0) {
-        res.status(400).json({ errorMessages: errorsArray });
+        res.status(400).json({ errorsMessages: errorsArray });
         return;
     }
     if (newVideo) {
