@@ -83,7 +83,7 @@ app.post('/videos', (req:Request<{},{},{
 
     }
     if (errorsValue > 0){
-        res.status(400).send({errorMessages: errorsArray})
+        res.status(400).json({errorMessages: errorsArray})
         return;
     }
     if (newVideo) {
