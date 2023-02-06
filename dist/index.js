@@ -22,7 +22,6 @@ let publicationDate = new Date();
 publicationDate.setDate(publicationDate.getDate() + 1);
 let errorsArray = [];
 let errorsValue = 0;
-const err = { message: "er", field: "err" };
 exports.app.post('/videos', (req, res) => {
     const newVideo = {
         id: +Date.now(),
@@ -34,10 +33,12 @@ exports.app.post('/videos', (req, res) => {
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     };
+    const errTitle = { message: "er", field: "title" };
+    const err = { message: "er", field: "title" };
     if (req.body.title == null) {
-        errorsArray.push(err);
+        errorsArray.push(errTitle);
         errorsValue++;
-        res.status(400).json({ errorMessages: errorsArray });
+        res.status(400).send({ errorMessages: errorsArray });
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;
