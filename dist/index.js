@@ -22,7 +22,7 @@ let publicationDate = new Date();
 publicationDate.setDate(publicationDate.getDate() + 1);
 let errorsArray = [];
 let errorsValue = 0;
-const err = { message: "er", find: "err" };
+const err = { message: "er", field: "err" };
 exports.app.post('/videos', (req, res) => {
     const newVideo = {
         id: +Date.now(),
@@ -37,7 +37,7 @@ exports.app.post('/videos', (req, res) => {
     if (req.body.title == null) {
         errorsArray.push(err);
         errorsValue++;
-        res.status(400).send({ errorMessages: errorsArray });
+        res.status(400).json({ errorMessages: errorsArray });
         return;
     }
     let minAgeRestriction = req.body.minAgeRestriction;
