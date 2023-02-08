@@ -11,12 +11,6 @@ let createdAt = new Date()
 let publicationDate = new Date()
 publicationDate.setDate(publicationDate.getDate() +1);
 
-let errorsArray: any = [];
-
-let errorsValue = 0;
-
-
-
 
 videosRouter.get('/', (req: Request, res: Response)=> {
     res.status(200).send(DB);
@@ -24,7 +18,18 @@ videosRouter.get('/', (req: Request, res: Response)=> {
 
 
 videosRouter.post('/', (req:RequestWithBody<CreateVideoModel>, res: Response)=> {
-    const newVideo:TypesVid = {
+    const errTitle = {message: "er", field: "title"}
+    const errAuthor = {message: "er", field: "author"}
+    const errAvailableResolutions = {message: "er", field: "availableResolutions"}
+    let errorsArray: any = [];
+    let errorsValue = 0;
+    if (req.body.title === null){
+        errorsArray.push(errTitle)
+        res.status(400).json({errorsMessages: errorsArray})
+
+        return;
+    }
+    let newVideo:TypesVid = {
         id : +Date.now() ,
         title: req.body.title,
         author: req.body.author,
@@ -34,23 +39,20 @@ videosRouter.post('/', (req:RequestWithBody<CreateVideoModel>, res: Response)=> 
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     }
-    const errTitle = {message: "er", field: "title"}
-    const errAuthor = {message: "er", field: "author"}
-    const errAvailableResolutions = {message: "er", field: "availableResolutions"}
 
 
-    if (req.body.title.length > 40 && req.body.title.length < 1 ){
+    if (newVideo.title.length > 40 || req.body.title !== 'string'  ){
         errorsArray.push(errTitle)
-        errorsValue++
+        errorsValue = errorsValue + 1
     }
 
-    if (req.body.author.length > 20 && req.body.author.length < 1){
+    if (req.body.author.length > 20 || req.body.author.length < 1){
         errorsArray.push(errAuthor)
-        errorsValue++
+        errorsValue = errorsValue + 1
     }
     if (req.body.availableResolutions.length < 1){
         errorsArray.push(errAvailableResolutions)
-        errorsValue++
+        errorsValue = errorsValue + 1
     }
     if (errorsValue > 0){
         res.status(400).json({errorsMessages: errorsArray})

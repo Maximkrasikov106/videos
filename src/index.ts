@@ -6,7 +6,6 @@ import {testingRouter} from "./routes/testing-routes"
 export const app = express();
 const port = 3000;
 
-let videos:any = [];
 
 const parserMiddleware = bodyParser({});
 app.use(parserMiddleware);
