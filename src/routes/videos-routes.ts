@@ -41,7 +41,7 @@ videosRouter.post('/', (req:RequestWithBody<CreateVideoModel>, res: Response)=> 
     }
 
 
-    if (newVideo.title.length > 40 || req.body.title !== 'string'  ){
+    if (newVideo.title.length > 40 || typeof req.body.title !== 'string'){
         errorsArray.push(errTitle)
         errorsValue = errorsValue + 1
     }
