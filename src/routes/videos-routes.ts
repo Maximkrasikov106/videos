@@ -1,18 +1,21 @@
 import {Request, Response, Router} from "express";
-import {app} from "../index";
+
 import {DB, TypesVid} from "../DB"
+import {RequestWithBody} from "../types";
+import {CreateVideoModel} from "../models/CreateVideoModel";
 
 export const videosRouter = Router({})
 
-// let createdAt = new Date()
-// let publicationDate = new Date()
-// publicationDate.setDate(publicationDate.getDate() +1);
-//
-// let errorsArray: any = [];
-//
-// let errorsValue = 0;
-//
-// let videos: any[] =[];
+
+let createdAt = new Date()
+let publicationDate = new Date()
+publicationDate.setDate(publicationDate.getDate() +1);
+
+let errorsArray: any = [];
+
+let errorsValue = 0;
+
+
 
 
 videosRouter.get('/', (req: Request, res: Response)=> {
@@ -20,17 +23,7 @@ videosRouter.get('/', (req: Request, res: Response)=> {
 });
 
 
-videosRouter.post('/', (req:Request<{},{},{
-    title: string ,
-    author:string,
-    canBeDownloaded: boolean,
-    minAgeRestriction: number,
-    createdAt: string,
-    publicationDate: string,
-    availableResolutions: string,
-    message: string,
-    field: string
-}>, res: Response)=> {
+videosRouter.post('/', (req:RequestWithBody<CreateVideoModel>, res: Response)=> {
     const newVideo:TypesVid = {
         id : +Date.now() ,
         title: req.body.title,
@@ -42,37 +35,22 @@ videosRouter.post('/', (req:Request<{},{},{
         availableResolutions: req.body.availableResolutions
     }
     const errTitle = {message: "er", field: "title"}
-    const err = {message: "er", field: "title"}
+    const errAuthor = {message: "er", field: "author"}
+    const errAvailableResolutions = {message: "er", field: "availableResolutions"}
 
-    if ( req.body.title == null){
+
+    if (req.body.title.length > 40 && req.body.title.length < 1 ){
         errorsArray.push(errTitle)
         errorsValue++
-        res.status(400).send({errorsMessages: errorsArray})
-        return;
     }
 
-    let minAgeRestriction = req.body.minAgeRestriction
-    if ( (minAgeRestriction < 1 || minAgeRestriction > 18)){
-        errorsArray.push(err)
+    if (req.body.author.length > 20 && req.body.author.length < 1){
+        errorsArray.push(errAuthor)
         errorsValue++
-
-    }
-
-    if (req.body.title.length > 40){
-        errorsArray.push(err)
-        errorsValue++
-
-    }
-
-    if (req.body.author.length > 20){
-        errorsArray.push(err)
-        errorsValue++
-
     }
     if (req.body.availableResolutions.length < 1){
-        errorsArray.push(err)
+        errorsArray.push(errAvailableResolutions)
         errorsValue++
-
     }
     if (errorsValue > 0){
         res.status(400).json({errorsMessages: errorsArray})
@@ -105,7 +83,7 @@ videosRouter.put('/:id', (req:Request<{
     minAgeRestriction: number,
     createdAt: string,
     publicationDate: string,
-    availableResolutions: string,
+    availableResolutions: string[],
     message: string,
     field: string,
 }>, res: Response)=> {
@@ -132,7 +110,8 @@ videosRouter.delete('/:id', (req: Request, res: Response)=> {
         res.sendStatus(404)
         return
     }
-    DB = AllVideo
+    // @ts-ignore
+    DB  = AllVideo
     res.sendStatus(204)
 
 
