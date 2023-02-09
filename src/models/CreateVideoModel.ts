@@ -8,7 +8,6 @@ export type CreateVideoModel = {
 
 
 export type ChangeVideoModel = {
-
     title: string,
     author: string,
     canBeDownloaded: boolean,

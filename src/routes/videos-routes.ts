@@ -94,20 +94,21 @@ videosRouter.get('/:id', (req, res)=> {
 
 });
 
-videosRouter.put('/:id', (req: Request
-, res: Response)=> {
+videosRouter.put('/:id', (req: Request, res: Response)=> {
+    if (req.body.title == null){
+        req.body.title = true
+    }
+    let newVideo= DB.find(p => p.id === +req.params.id)
+    let index = DB.findIndex(c => c.id === +req.params.id)
     let errorsUpdateArray = [];
-    let newVideo: TypesVid | undefined = DB.find(p => p.id === +req.params.id)
-    let index = DB.findIndex((c) => c.id === +req.params.id)
-
     if (newVideo) {
          newVideo = {...newVideo, ...req.body};
 
+         if (typeof newVideo?.title !== "string" || newVideo?.title.length > 40 ) {
+             errorsUpdateArray.push(errTitle)
+         }
 
-    if (typeof newVideo?.title !== "string" || newVideo.title.length > 40) {
-        errorsUpdateArray.push(errTitle)
-    }
-    if (typeof newVideo?.author !== "string" || newVideo.title.length > 20) {
+    if (typeof newVideo?.author !== "string" || newVideo?.title.length > 20) {
         errorsUpdateArray.push(errAuthor)
     }
     if (Array.isArray(newVideo?.availableResolutions)) {
@@ -140,7 +141,7 @@ if (typeof newVideo?.publicationDate === "string"){
     errorsUpdateArray.push(pubDate)
 }
 
-if (errorsUpdateArray.length > 0){
+if ( errorsUpdateArray.length > 0){
     res.status(400).send({errorsMessages : errorsUpdateArray})
 } else {
     // @ts-ignore
