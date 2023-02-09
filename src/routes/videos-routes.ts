@@ -95,9 +95,7 @@ videosRouter.get('/:id', (req, res)=> {
 });
 
 videosRouter.put('/:id', (req: Request, res: Response)=> {
-    if (req.body.title == null){
-        req.body.title = true
-    }
+
     let newVideo= DB.find(p => p.id === +req.params.id)
     let index = DB.findIndex(c => c.id === +req.params.id)
     let errorsUpdateArray = [];
