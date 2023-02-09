@@ -133,8 +133,7 @@ videosRouter.put('/:id', (req: Request
     }
 
 if (typeof newVideo?.publicationDate === "string"){
-    let reg = new RegExp("^([0-9]{2})\\.([0-9]{2})\\.([1-2][0-9]{3})$");
-    if (!reg.test(newVideo.publicationDate)){
+    if (!/\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/.test(newVideo.publicationDate)){
         errorsUpdateArray.push(pubDate)
     }
 }else {
