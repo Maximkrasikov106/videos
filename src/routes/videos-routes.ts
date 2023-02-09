@@ -16,6 +16,7 @@ let createdAt = new Date()
 let publicationDate = new Date()
 publicationDate.setDate(publicationDate.getDate() +1);
 
+const availValidValue =  ["P144", "P240", "P360", "P480", "P720", "P1080", "P1440", "P2160"]
 
 videosRouter.get('/', (req: Request, res: Response)=> {
     res.status(200).send(DB);
@@ -51,12 +52,25 @@ videosRouter.post('/', (req: RequestWithBody<CreateVideoModel>, res: Response)=>
         errorsArray.push(errAuthor)
         errorsValue = errorsValue + 1
     }
-    if (req.body.availableResolutions.length < 1){
+    if ( req.body.availableResolutions.length < 1){
         errorsArray.push(errAvailableResolutions)
         errorsValue = errorsValue + 1
     }
+
+    if (!(Array.isArray(req.body.availableResolutions))){
+        errorsArray.push(errAvailableResolutions)
+        errorsValue = errorsValue + 1
+    }
+    req.body.availableResolutions.map((item) => {
+        if (!availValidValue.includes(item)) {
+            errorsArray.push(errAvailableResolutions)
+            errorsValue = errorsValue + 1
+        }
+    })
+
     if (errorsValue > 0){
         res.status(400).json({errorsMessages: errorsArray})
+        errorsValue = 0
         return;
     }
     if (newVideo) {
