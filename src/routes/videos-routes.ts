@@ -101,7 +101,7 @@ videosRouter.put('/:id', (req: Request
     let index = DB.findIndex((c) => c.id === +req.params.id)
 
     if (newVideo) {
-        const NewVideo = {...newVideo, ...req.body};
+         newVideo = {...newVideo, ...req.body};
 
 
     if (typeof newVideo?.title !== "string" || newVideo.title.length > 40) {
