@@ -108,9 +108,9 @@ videosRouter.put('/:id', (req: Request, res: Response)=> {
              errorsUpdateArray.push(errTitle)
          }
 
-    if (typeof newVideo?.author !== "string" || newVideo?.title.length > 20) {
+        if (typeof newVideo?.author !== "string" || newVideo?.author.length > 20) {
         errorsUpdateArray.push(errAuthor)
-    }
+        }
     if (Array.isArray(newVideo?.availableResolutions)) {
         newVideo?.availableResolutions.map((item) => {
                 if (!availValidValue.includes(item)) {
