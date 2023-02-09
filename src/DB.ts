@@ -1,7 +1,7 @@
 export let DB:TypesVid[] = [
     {
         id:123123,
-        title: 'mem',
+        title: 'memasd',
         author: 'kek',
         canBeDownloaded: false,
         minAgeRestriction: null,
@@ -13,7 +13,7 @@ export let DB:TypesVid[] = [
 
 export type TypesVid = {
     id: number,
-    title: string,
+    title: string ,
     author: string,
     canBeDownloaded: boolean,
     minAgeRestriction: null | number,

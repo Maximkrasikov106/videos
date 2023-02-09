@@ -3,8 +3,13 @@ import {Request, Response, Router} from "express";
 import {DB, TypesVid} from "../DB"
 import {RequestWithBody} from "../types";
 import {CreateVideoModel} from "../models/CreateVideoModel";
+import bodyParser from "body-parser";
+import {app} from "../index";
 
 export const videosRouter = Router({})
+
+const parserMiddleware = bodyParser({});
+videosRouter.use(parserMiddleware);
 
 
 let createdAt = new Date()
@@ -15,21 +20,16 @@ publicationDate.setDate(publicationDate.getDate() +1);
 videosRouter.get('/', (req: Request, res: Response)=> {
     res.status(200).send(DB);
 });
+const errTitle = {message: "er", field: "title"}
+const errAuthor = {message: "er", field: "author"}
+const errAvailableResolutions = {message: "er", field: "availableResolutions"}
+let errorsArray: any = [];
+let errorsValue = 0;
 
 
-videosRouter.post('/', (req:RequestWithBody<CreateVideoModel>, res: Response)=> {
-    const errTitle = {message: "er", field: "title"}
-    const errAuthor = {message: "er", field: "author"}
-    const errAvailableResolutions = {message: "er", field: "availableResolutions"}
-    let errorsArray: any = [];
-    let errorsValue = 0;
-    if (req.body.title === null){
-        errorsArray.push(errTitle)
-        res.status(400).json({errorsMessages: errorsArray})
+videosRouter.post('/', (req: RequestWithBody<CreateVideoModel>, res: Response)=> {
 
-        return;
-    }
-    let newVideo:TypesVid = {
+    let newVideo = {
         id : +Date.now() ,
         title: req.body.title,
         author: req.body.author,
@@ -39,14 +39,15 @@ videosRouter.post('/', (req:RequestWithBody<CreateVideoModel>, res: Response)=> 
         publicationDate: publicationDate.toISOString(),
         availableResolutions: req.body.availableResolutions
     }
+    errorsArray.splice(0, errorsArray.length)
 
-
-    if (newVideo.title.length > 40 || typeof req.body.title !== 'string'){
+    if ( typeof req.body.title !== "string" || newVideo.title.length > 40   || !req.body.title  ){
         errorsArray.push(errTitle)
         errorsValue = errorsValue + 1
     }
 
-    if (req.body.author.length > 20 || req.body.author.length < 1){
+
+    if (typeof req.body.author !== 'string' || req.body.author.length > 20 ||  !req.body.author ){
         errorsArray.push(errAuthor)
         errorsValue = errorsValue + 1
     }
