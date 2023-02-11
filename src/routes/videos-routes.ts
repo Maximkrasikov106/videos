@@ -1,10 +1,10 @@
 import {Request, Response, Router} from "express";
 
-import {DB, TypesVid} from "../DB"
+import {DB} from "../DB"
 import {RequestWithBody} from "../types";
-import {ChangeVideoModel, CreateVideoModel} from "../models/CreateVideoModel";
+import { CreateVideoModel} from "../models/CreateVideoModel";
 import bodyParser from "body-parser";
-import {app} from "../index";
+
 
 export const videosRouter = Router({})
 

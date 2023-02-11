@@ -1,6 +1,6 @@
 import {Router} from "express";
-import {app} from "../index";
-import {DB, TypesVid} from "../DB"
+
+import {DB} from "../DB"
 export const testingRouter = Router({})
 
 const videos:any = [];

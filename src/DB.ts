@@ -11,6 +11,17 @@ export let DB:TypesVid[] = [
     }
 ]
 
+export let DB_Blogs = [
+
+        {
+            "id": 232,
+            "name": "mem4uk",
+            "description": "asdasdasd",
+            "websiteUrl": "https://kek.org"
+        }
+
+]
+
 export type TypesVid = {
     id: number,
     title: string,
