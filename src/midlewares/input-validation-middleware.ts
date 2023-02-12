@@ -4,7 +4,7 @@ import {validationResult} from "express-validator";
 export const inputValidationMiddleware = (req: Request, res:Response, next: NextFunction) => {
     const err =  validationResult(req)
     if(!err.isEmpty()) {
-        res.status(400).send({errors: err.array()})
+        res.status(400).send({errorsMessages: err.array()})
     }else{
         next()
     }

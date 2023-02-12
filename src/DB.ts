@@ -18,7 +18,7 @@ export function setDB_Blogs (newBlog:BlogsType[]) {
 export let DB_Blogs:BlogsType[] = [
 
         {
-            id: 232,
+            id: "232",
             name: "mem4uk",
             description: 'asdasdasd',
             websiteUrl: "https://kek.org"
@@ -26,7 +26,7 @@ export let DB_Blogs:BlogsType[] = [
 ]
 
 export type BlogsType =  {
-    id: number,
+    id: string,
     name: string,
     description: string,
     websiteUrl: string

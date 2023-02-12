@@ -17,7 +17,7 @@ blogsRouter.get('/', (req: Request, res: Response)=> {
 
 
 blogsRouter.get('/:id', (req , res)=> {
-    const foundBlog = DB_Blogs.find(item => item.id === +req.params.id)
+    const foundBlog = DB_Blogs.find(item => item.id === req.params.id)
     if (foundBlog){
         res.status(200).send(foundBlog);
     }else{
@@ -29,7 +29,7 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
     (req: RequestWithBody<BlogsType>, res: Response, ) => {
 
     let newBlog:BlogsType = {
-        id: +Date.now(),
+        id: Date.now().toString(),
         name: req.body.name,
         description: req.body.description,
         websiteUrl: req.body.websiteUrl
@@ -41,19 +41,23 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 
 
 blogsRouter.delete('/:id', authMiddleware,(req: Request, res: Response)=> {
-    let foundBlogs: BlogsType[] = DB_Blogs.filter((item: { id: number; }) => item.id !== +req.params.id)
-    if (foundBlogs.length == DB_Blogs.length) {
+    let foundBlogs: BlogsType[] | undefined = DB_Blogs.filter((item) => item.id !== req.params.id)
+    if (foundBlogs) {
+        if (foundBlogs.length == DB_Blogs.length) {
+            res.sendStatus(404)
+            return
+     }
+        setDB_Blogs(foundBlogs)
+        res.sendStatus(204)
+}else {
         res.sendStatus(404)
-        return
     }
-    setDB_Blogs(foundBlogs)
-    res.sendStatus(204)
 
 });
 
 
 blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,(req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
-    let findBlog  = DB_Blogs.find(p => p.id === +req.params.id)
+    let findBlog  = DB_Blogs.find(p => p.id === req.params.id)
     let index = DB.findIndex(c => c.id === +req.params.id)
     if (findBlog){
         findBlog = {...findBlog, ...req.body};
