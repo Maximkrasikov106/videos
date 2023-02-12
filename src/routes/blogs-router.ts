@@ -5,6 +5,7 @@ import {BlogsType, DB, DB_Blogs, setDB_Blogs} from "../DB"
 import {RequestWithBody, RequestWithBodyAndQuery} from "../types";
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
+import {authMiddleware} from "../midlewares/auth-middleware";
 export const blogsRouter = Router({})
 
 
@@ -24,7 +25,7 @@ blogsRouter.get('/:id', (req , res)=> {
     }
 });
 
-blogsRouter.post('/',  nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,
+blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,
     (req: RequestWithBody<BlogsType>, res: Response, ) => {
 
     let newBlog:BlogsType = {
@@ -39,7 +40,7 @@ blogsRouter.post('/',  nameValidation,descriptionValidate,websiteUrlValidate,inp
 })
 
 
-blogsRouter.delete('/:id', (req: Request, res: Response)=> {
+blogsRouter.delete('/:id', authMiddleware,(req: Request, res: Response)=> {
     let foundBlogs: BlogsType[] = DB_Blogs.filter((item: { id: number; }) => item.id !== +req.params.id)
     if (foundBlogs.length == DB_Blogs.length) {
         res.sendStatus(404)
@@ -51,7 +52,7 @@ blogsRouter.delete('/:id', (req: Request, res: Response)=> {
 });
 
 
-blogsRouter.put('/:id', nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,(req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
+blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,(req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
     let findBlog  = DB_Blogs.find(p => p.id === +req.params.id)
     let index = DB.findIndex(c => c.id === +req.params.id)
     if (findBlog){
