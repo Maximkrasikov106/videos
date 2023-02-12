@@ -18,7 +18,7 @@ blogsRouter.get('/', (req: Request, res: Response)=> {
 
 blogsRouter.get('/:id', (req , res)=> {
     const foundBlog = DB_Blogs.find(item => item.id === req.params.id)
-    if (foundBlog){
+    if (foundBlog || foundBlog === undefined){
         res.status(200).send(foundBlog);
     }else{
         res.status(404);
@@ -42,7 +42,7 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 
 blogsRouter.delete('/:id', authMiddleware,(req: Request, res: Response)=> {
     let foundBlogs: BlogsType[] | undefined = DB_Blogs.filter((item) => item.id !== req.params.id)
-    if (foundBlogs) {
+    if (foundBlogs !== undefined) {
         if (foundBlogs.length == DB_Blogs.length) {
             res.sendStatus(404)
             return
