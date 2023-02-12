@@ -11,16 +11,26 @@ export let DB:TypesVid[] = [
     }
 ]
 
-export let DB_Blogs = [
+export function setDB_Blogs (newBlog:BlogsType[]) {
+    DB_Blogs = newBlog
+}
+
+export let DB_Blogs:BlogsType[] = [
 
         {
-            "id": 232,
-            "name": "mem4uk",
-            "description": "asdasdasd",
-            "websiteUrl": "https://kek.org"
+            id: 232,
+            name: "mem4uk",
+            description: 'asdasdasd',
+            websiteUrl: "https://kek.org"
         }
-
 ]
+
+export type BlogsType =  {
+    id: number,
+    name: string,
+    description: string,
+    websiteUrl: string
+}
 
 export type TypesVid = {
     id: number,

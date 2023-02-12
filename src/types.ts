@@ -5,3 +5,6 @@ export type RequestWithBody<T> = Request<{
 export type RequestWithQuery<T> = Request<{},{},{},T>
 export type RequestWithParams<T> = Request<T>
 
+export type RequestWithBodyAndQuery< T> = Request<{
+    id: string;
+},{},T>
