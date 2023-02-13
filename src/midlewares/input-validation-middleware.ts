@@ -7,9 +7,10 @@ export const inputValidationMiddleware = (req: Request, res:Response, next: Next
 
 
     let myValidationResult = validationResult(req)
-
+    let arrayErors = [];
+    arrayErors.push(myValidationResult["errors"][0].msg)
     if(!myValidationResult.isEmpty()) {
-        res.status(400).send({errorsMessages: myValidationResult["errors"][0].msg })
+        res.status(400).send({errorsMessages: arrayErors })
     }else{
         next()
     }
