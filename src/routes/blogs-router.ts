@@ -70,5 +70,5 @@ blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websit
 
 
     DB_Blogs.splice(index, 1, findBlog)
-    res.sendStatus(204).send(findBlog)
+    res.status(204).send(findBlog)
 });

@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import { DB_Blogs, DB_Posts, PostType, setDB_Blogs} from "../DB";
+import {DB_Blogs, DB_Posts, PostType, setDB_Blogs, setDB_Posts} from "../DB";
 import {RequestWithBody, RequestWithBodyAndQuery} from "../types";
 import {authMiddleware} from "../midlewares/auth-middleware";
 import {
@@ -80,16 +80,14 @@ postsRouter.put('/:id',
 })
 
 postsRouter.delete('/:id', authMiddleware,(req:RequestWithBodyAndQuery<PostType>, res: Response)=> {
-    let foundPosts = DB_Blogs.filter((item) => item.id !== req.params.id)
+    let foundPosts = DB_Posts.filter((item) => item.id !== req.params.id)
     if (foundPosts !== undefined) {
-        if (foundPosts.length == DB_Blogs.length) {
+        if (foundPosts.length == DB_Posts.length) {
             res.sendStatus(404)
             return
         }else {
-
-
-        setDB_Blogs(foundPosts)
-        res.sendStatus(204)
+            setDB_Posts(foundPosts)
+            res.sendStatus(204)
         }
     }else {
         res.sendStatus(404)

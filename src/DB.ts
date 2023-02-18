@@ -15,6 +15,10 @@ export function setDB_Blogs (newBlog:BlogsType[]) {
     DB_Blogs = newBlog
 }
 
+export function setDB_Posts (newPost:PostType[]) {
+    DB_Posts = newPost
+}
+
 export let DB_Blogs:BlogsType[] = [
 
         {
