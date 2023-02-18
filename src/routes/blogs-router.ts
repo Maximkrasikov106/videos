@@ -46,13 +46,15 @@ blogsRouter.delete('/:id', authMiddleware,(req: Request, res: Response)=> {
         if (foundBlogs.length == DB_Blogs.length) {
             res.sendStatus(404)
             return
-     }
+        }
         setDB_Blogs(foundBlogs)
         res.sendStatus(204)
+        return;
 }else {
         res.sendStatus(404)
+        return;
     }
-
+    res.sendStatus(404)
 });
 
 
