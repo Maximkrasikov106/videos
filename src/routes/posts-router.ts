@@ -8,6 +8,7 @@ import {
     ShortDescriptionPostValidate,
     titlePostValidate
 } from "../validators/validators-posts";
+import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 
 function foundedBlog(id: string) {
     let foundBlog = DB_Blogs.find(item => item.id === id)
@@ -40,6 +41,7 @@ postsRouter.post('/',
     ShortDescriptionPostValidate,
     contentPostValidate,
     blogIdPostValidate,
+    inputValidationMiddleware,
     (req:RequestWithBody<PostType>, res: Response) => {
     let newPost = {
         id: Date.now().toString(),
@@ -60,7 +62,9 @@ postsRouter.put('/:id',
     titlePostValidate,
     ShortDescriptionPostValidate,
     contentPostValidate,
-    blogIdPostValidate, (req:RequestWithBodyAndQuery<PostType>, res) => {
+    blogIdPostValidate,
+    inputValidationMiddleware,
+    (req:RequestWithBodyAndQuery<PostType>, res) => {
     let findBlog  = DB_Posts.find(p => p.id === req.params.id)
     let index = DB_Posts.findIndex(c => c.id === req.params.id)
     if (findBlog){

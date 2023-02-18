@@ -6,7 +6,7 @@ export const titlePostValidate = body('title', ).trim().isLength({
     max: 30
 }).withMessage('title')
 export const ShortDescriptionPostValidate = body('shortDescription', ).trim().isLength({
-    min: 1,
+
     max: 100
 }).withMessage('shortDescription')
 export const contentPostValidate = body('content', ).isString().trim().isLength({
@@ -17,8 +17,8 @@ export const contentPostValidate = body('content', ).isString().trim().isLength(
 export const blogIdPostValidate = body('blogId', ).custom((value, {req: Request}) => {
     const blogs = DB_Blogs.find(item => value === item)
     if (blogs) {
-        return true;
-    }else {
         return false;
+    }else {
+        return true;
     }
 }).withMessage('blogId')
