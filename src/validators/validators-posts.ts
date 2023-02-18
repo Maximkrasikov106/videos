@@ -15,10 +15,8 @@ export const contentPostValidate = body('content', ).isString().trim().isLength(
 }).withMessage('content')
 
 export const blogIdPostValidate = body('blogId', ).custom((value, {req: Request}) => {
-    const blogs = DB_Blogs.find(item => value === item)
+    const blogs = DB_Blogs.find(item => value === item.id)
     if (blogs) {
-        return false;
-    }else {
         return true;
     }
 }).withMessage('blogId')
