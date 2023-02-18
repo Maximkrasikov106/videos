@@ -25,7 +25,7 @@ postsRouter.get('/', (req, res) => {
 
 
 postsRouter.get('/:id', (req, res) => {
-    const foundPost: PostType[] = DB_Posts.filter(item => item.id === req.params.id)
+    const foundPost = DB_Posts.filter(item => item.id === req.params.id)
     if (foundPost.length !== 0) {
         res.status(200).send(foundPost);
     } else {
@@ -41,7 +41,7 @@ postsRouter.post('/',
     contentPostValidate,
     blogIdPostValidate,
     (req:RequestWithBody<PostType>, res: Response) => {
-    let newPost:PostType = {
+    let newPost = {
         id: Date.now().toString(),
         title: req.body.title,
         shortDescription: req.body.shortDescription,
