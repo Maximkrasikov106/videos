@@ -40,8 +40,8 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 })
 
 
-blogsRouter.delete('/:id', authMiddleware,(req:RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
-    let foundBlogs: BlogsType[] | undefined = DB_Blogs.filter((item) => item.id !== req.params.id)
+blogsRouter.delete('/:id', authMiddleware,(req, res: Response)=> {
+    let foundBlogs  = DB_Blogs.filter(item => item.id !== req.params.id)
     if (foundBlogs !== undefined) {
         if (!foundBlogs || foundBlogs.length == DB_Blogs.length) {
             res.sendStatus(404)
