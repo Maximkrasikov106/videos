@@ -1,4 +1,5 @@
 import {body, validationResult} from "express-validator";
+import {DB_Blogs} from "../DB";
 
 export const titlePostValidate = body('title', ).trim().isLength({
     min: 1,
@@ -13,4 +14,11 @@ export const contentPostValidate = body('content', ).isString().trim().isLength(
     max: 1000
 }).withMessage('content')
 
-export const blogIdPostValidate = body('blogId', ).exists().isString().withMessage('blogId')
+export const blogIdPostValidate = body('blogId', ).custom((value, {req: Request}) => {
+    const blogs = DB_Blogs.find(item => value === item)
+    if (blogs) {
+        return true;
+    }else {
+        return false;
+    }
+}).withMessage('blogId')

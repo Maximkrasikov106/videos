@@ -48,8 +48,9 @@ blogsRouter.delete('/:id', authMiddleware,(req, res: Response)=> {
             return
         }
 
-        // @ts-ignore
-        DB_Blogs = foundBlogs
+
+
+        setDB_Blogs(foundBlogs)
         res.sendStatus(204)
         return;
 }else {

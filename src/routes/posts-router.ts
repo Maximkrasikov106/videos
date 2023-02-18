@@ -9,7 +9,12 @@ import {
     titlePostValidate
 } from "../validators/validators-posts";
 
+function foundedBlog(id: string) {
+    let foundBlog = DB_Blogs.find(item => item.id === id)
 
+    // @ts-ignore
+    return foundBlog.name
+}
 
 export const postsRouter = Router({})
 
@@ -42,7 +47,7 @@ postsRouter.post('/',
         shortDescription: req.body.shortDescription,
         content: req.body.content,
         blogId: req.body.blogId,
-        blogName: "string"
+        blogName: foundedBlog(req.body.blogId)
     }
     DB_Posts.push(newPost);
     res.status(201).send(newPost)
@@ -65,7 +70,7 @@ postsRouter.put('/:id',
         return
     }
 
-    // @ts-ignore
+
     DB_Posts.splice(index, 1, findBlog)
     res.sendStatus(204).send(findBlog)
 })
