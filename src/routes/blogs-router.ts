@@ -18,7 +18,7 @@ blogsRouter.get('/', (req: Request, res: Response)=> {
 
 blogsRouter.get('/:id', (req , res)=> {
     const foundBlog = DB_Blogs.find(item => item.id === req.params.id)
-    if (foundBlog || foundBlog !== undefined){
+    if (foundBlog !== undefined && foundBlog){
         res.status(200).send(foundBlog);
     }else{
         res.status(404);
