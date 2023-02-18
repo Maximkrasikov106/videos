@@ -40,7 +40,7 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 })
 
 
-blogsRouter.delete('/:id', authMiddleware,(req:Request, res: Response)=> {
+blogsRouter.delete('/:id', authMiddleware,(req:RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
     for (let i = 0; i < DB_Blogs.length; i++) {
         if (+DB_Blogs[i].id === +req.params.id){
             DB_Blogs.splice(i, 1)
