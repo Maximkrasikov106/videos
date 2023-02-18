@@ -10,7 +10,7 @@ export const ShortDescriptionPostValidate = body('shortDescription', ).trim().is
     max: 100
 }).withMessage('shortDescription')
 export const contentPostValidate = body('content', ).isString().trim().isLength({
-
+    min: 1,
     max: 1000
 }).withMessage('content')
 
