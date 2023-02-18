@@ -47,7 +47,9 @@ blogsRouter.delete('/:id', authMiddleware,(req:RequestWithBodyAndQuery<BlogsType
             res.sendStatus(404)
             return
         }
-        setDB_Blogs(foundBlogs)
+
+        // @ts-ignore
+        DB_Blogs = foundBlogs
         res.sendStatus(204)
         return;
 }else {
@@ -68,7 +70,7 @@ blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websit
         return
     }
 
-    // @ts-ignore
+
     DB_Blogs.splice(index, 1, findBlog)
     res.sendStatus(204).send(findBlog)
 });
