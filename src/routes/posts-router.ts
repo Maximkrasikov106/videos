@@ -25,8 +25,8 @@ postsRouter.get('/', (req, res) => {
 
 
 postsRouter.get('/:id', (req, res) => {
-    const foundPost = DB_Posts.filter(item => item.id === req.params.id)
-    if (foundPost.length !== 0) {
+    const foundPost = DB_Posts.find(item => item.id === req.params.id)
+    if (foundPost) {
         res.status(200).send(foundPost);
     } else {
         res.sendStatus(404)
