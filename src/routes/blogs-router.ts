@@ -58,7 +58,7 @@ blogsRouter.delete('/:id', authMiddleware,(req: Request, res: Response)=> {
 
 blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,(req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
     let findBlog  = DB_Blogs.find(p => p.id === req.params.id)
-    let index = DB.findIndex(c => c.id === +req.params.id)
+    let index = DB_Blogs.findIndex(c => c.id === req.params.id)
     if (findBlog){
         findBlog = {...findBlog, ...req.body};
     } else {

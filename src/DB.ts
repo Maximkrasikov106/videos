@@ -25,6 +25,28 @@ export let DB_Blogs:BlogsType[] = [
         }
 ]
 
+export let DB_Posts:PostType[] = [
+    {
+        id: "333",
+        title: "title",
+        shortDescription: "short",
+        content: "asdasdas",
+        blogId: "232",
+        blogName: "asdsadasd"
+    }
+]
+
+export type PostType = {
+    id: string,
+    title: string,
+    shortDescription: string,
+    content: string,
+    blogId: string,
+    blogName: string
+}
+
+
+
 export type BlogsType =  {
     id: string,
     name: string,
