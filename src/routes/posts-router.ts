@@ -28,7 +28,7 @@ postsRouter.get('/', (req, res) => {
 postsRouter.get('/:id', (req, res) => {
     const foundPost = DB_Posts.find(item => item.id === req.params.id)
     if (foundPost) {
-        res.sendStatus(200).send(foundPost);
+        res.status(200).send(foundPost);
     } else {
         res.sendStatus(404)
     }
@@ -85,9 +85,12 @@ postsRouter.delete('/:id', authMiddleware,(req:RequestWithBodyAndQuery<PostType>
         if (foundPosts.length == DB_Blogs.length) {
             res.sendStatus(404)
             return
-        }
+        }else {
+
+
         setDB_Blogs(foundPosts)
         res.sendStatus(204)
+        }
     }else {
         res.sendStatus(404)
     }
