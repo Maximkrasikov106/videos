@@ -41,20 +41,16 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 
 
 blogsRouter.delete('/:id', authMiddleware,(req:Request, res: Response)=> {
-    let foundBlogs: BlogsType[] = DB_Blogs.filter((item) => +item.id !== +req.params.id)
-    if (foundBlogs !== undefined) {
-        if (foundBlogs.length == DB_Blogs.length) {
-            res.sendStatus(404)
-            return
+    for (let i = 0; i < DB_Blogs.length; i++) {
+        if (+DB_Blogs[i].id === +req.params.id){
+            DB_Blogs.splice(i, 1)
+            res.sendStatus(204)
+        }else {
+            res.sendStatus(404);
         }
-        setDB_Blogs(foundBlogs)
-        res.sendStatus(204)
-        return;
-}else {
-        res.sendStatus(404)
-        return;
     }
-    res.sendStatus(404)
+
+
 });
 
 
@@ -68,7 +64,7 @@ blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websit
         return
     }
 
-    // @ts-ignore
+
     DB_Blogs.splice(index, 1, findBlog)
     res.sendStatus(204).send(findBlog)
 });
