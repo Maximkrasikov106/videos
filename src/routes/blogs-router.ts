@@ -47,9 +47,6 @@ blogsRouter.delete('/:id', authMiddleware,(req, res: Response)=> {
             res.sendStatus(404)
             return
         }
-
-
-
         setDB_Blogs(foundBlogs)
         res.sendStatus(204)
         return;
