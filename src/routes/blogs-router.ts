@@ -55,7 +55,7 @@ blogsRouter.put('/:id',
     websiteUrlValidate,
     inputValidationMiddleware,
     async (req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
-    let findBlog = await blogsRepositoriy.updateBlog(req.body.id, req.body)
+    let findBlog = await blogsRepositoriy.updateBlog(req.params.id, req.body)
 
     if (findBlog){
         res.sendStatus(204)
