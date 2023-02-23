@@ -55,17 +55,19 @@ blogsRouter.delete('/:id', authMiddleware,(req, res: Response)=> {
 });
 
 
-blogsRouter.put('/:id', authMiddleware,nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,(req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
-    let findBlog  = DB_Blogs.find(p => p.id === req.params.id)
-    let index = DB_Blogs.findIndex(c => c.id === req.params.id)
+blogsRouter.put('/:id',
+    authMiddleware,
+    nameValidation,
+    descriptionValidate,
+    websiteUrlValidate,
+    inputValidationMiddleware,
+    async (req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
+    let findBlog = await blogsRepositoriy.updateBlog(req.body.id, req.body)
+
     if (findBlog){
-        findBlog = {...findBlog, ...req.body};
-    } else {
+        res.sendStatus(204)
+    }else {
         res.sendStatus(404)
-        return
     }
 
-
-    DB_Blogs.splice(index, 1, findBlog)
-    res.status(204).send(findBlog)
 });
