@@ -19,7 +19,7 @@ blogsRouter.get('/', (req: Request, res: Response)=> {
 
 blogsRouter.get('/:id', async (req , res)=> {
     const foundBlog = await blogsRepositoriy.getBlogById(req.params.id)
-    if (foundBlog ){
+    if (foundBlog){
         res.status(200).send(foundBlog);
     }else{
         res.sendStatus(404);
