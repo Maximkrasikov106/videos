@@ -1,4 +1,4 @@
-import {BlogsType, DB_Blogs} from "../DB";
+import {BlogsType, DB_Blogs, setDB_Blogs} from "../DB";
 
 export const blogsRepositoriy = {
     getBlogById(id: string) {
@@ -23,5 +23,15 @@ export const blogsRepositoriy = {
         }
         DB_Blogs.splice(index, 1, findBlog)
         return findBlog
+    },
+    deleteBlog(id: string) {
+        let foundBlogs  = DB_Blogs.filter(item => item.id !== id)
+        if (!foundBlogs || foundBlogs.length == DB_Blogs.length) {
+
+            return false
+        }
+        setDB_Blogs(foundBlogs)
+
+        return; true
     }
 }

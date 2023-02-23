@@ -37,19 +37,12 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 })
 
 
-blogsRouter.delete('/:id', authMiddleware,(req, res: Response)=> {
-    let foundBlogs  = DB_Blogs.filter(item => item.id !== req.params.id)
-    if (foundBlogs !== undefined) {
-        if (!foundBlogs || foundBlogs.length == DB_Blogs.length) {
-            res.sendStatus(404)
-            return
-        }
-        setDB_Blogs(foundBlogs)
+blogsRouter.delete('/:id', authMiddleware, async (req, res: Response)=> {
+   let foundBlogs = await blogsRepositoriy.deleteBlog(req.params.id)
+    if (foundBlogs){
         res.sendStatus(204)
-        return;
     }else {
         res.sendStatus(404)
-        return;
     }
 
 });
