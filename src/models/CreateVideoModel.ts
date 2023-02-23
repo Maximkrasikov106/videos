@@ -1,5 +1,3 @@
-import exp from "constants";
-
 export type CreateVideoModel = {
     title: string,
     author: string,
@@ -7,11 +5,3 @@ export type CreateVideoModel = {
 }
 
 
-export type ChangeVideoModel = {
-    title: string,
-    author: string,
-    canBeDownloaded: boolean,
-    availableResolutions: string[],
-    minAgeRestriction: number | null,
-    publicationDate: string
-}
