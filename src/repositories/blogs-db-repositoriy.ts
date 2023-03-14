@@ -1,13 +1,12 @@
 import {BlogsType, client, DB_Blogs, setDB_Blogs} from "../DB";
+import {noIdBlog} from "../function/MappingId";
 
 export const blogsRepositoriy = {
-    async getBlogs(): Promise<BlogsType[] | null> {
+    async getBlogs(): Promise<void> {
 
         let  blogs = await client.db("soc").collection<BlogsType>("blogs").find({}).toArray()
         if (blogs){
-            return blogs
-        }else {
-            return null
+            return noIdBlog(blogs)
         }
 
     },
