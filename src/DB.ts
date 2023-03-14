@@ -1,3 +1,23 @@
+import {MongoClient} from 'mongodb'
+
+const mongoURI = 'mongodb+srv://admin:admin@cluster0.qaoo8bj.mongodb.net/?retryWrites=true&w=majority'
+
+console.log(process.env.MONGO_URL)
+
+export const client = new MongoClient(mongoURI)
+
+export async function runDb() {
+    try {
+        await client.connect();
+        await client.db("product").command({ping:1});
+        console.log("Connect to db successful")
+    } catch {
+        await client.close();
+        console.log("don't connect to db")
+    }
+}
+
+
 export let DB:TypesVid[] = [
     {
         id:123123,
@@ -25,7 +45,9 @@ export let DB_Blogs:BlogsType[] = [
             id: "232",
             name: "mem4uk",
             description: 'asdasdasd',
-            websiteUrl: "https://kek.org"
+            websiteUrl: "https://kek.org",
+            createdAt: "1233123",
+            sMembership: false
         }
 ]
 
@@ -36,7 +58,9 @@ export let DB_Posts:PostType[] = [
         shortDescription: "short",
         content: "asdasdas",
         blogId: "232",
-        blogName: "asdsadasd"
+        blogName: "asdsadasd",
+        createdAt: "1233123",
+        sMembership: false
     }
 ]
 
@@ -46,7 +70,9 @@ export type PostType = {
     shortDescription: string,
     content: string,
     blogId: string,
-    blogName: string
+    blogName: string | undefined,
+    createdAt: string,
+    sMembership: boolean
 }
 
 
@@ -55,7 +81,9 @@ export type BlogsType =  {
     id: string,
     name: string,
     description: string,
-    websiteUrl: string
+    websiteUrl: string,
+    createdAt: string,
+    sMembership: boolean
 }
 
 export type TypesVid = {

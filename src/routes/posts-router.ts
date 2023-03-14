@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {DB_Blogs, DB_Posts, PostType, setDB_Blogs, setDB_Posts} from "../DB";
+import {BlogsType, DB_Blogs, DB_Posts, PostType, setDB_Blogs, setDB_Posts} from "../DB";
 import {RequestWithBody, RequestWithBodyAndQuery} from "../types";
 import {authMiddleware} from "../midlewares/auth-middleware";
 import {
@@ -9,29 +9,28 @@ import {
     titlePostValidate
 } from "../validators/validators-posts";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
+import {postsRepositoriy} from "../repositories/post-db-repositoryes";
+import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 
-function foundedBlog(id: string) {
-    let foundBlog = DB_Blogs.find(item => item.id === id)
-
-    // @ts-ignore
-    return foundBlog.name
+ export function  foundedBlog(id: string) {
+    let foundBlog : BlogsType | undefined = DB_Blogs.find(item => item.id === id)
+    if (foundBlog){
+        return foundBlog.name
+    }
 }
 
 export const postsRouter = Router({})
 
 
-postsRouter.get('/', (req, res) => {
-    res.status(200).send(DB_Posts);
+postsRouter.get('/', async (req, res) => {
+    let posts = await postsRepositoriy.getPosts()
+    res.status(200).send(posts)
 })
 
 
-postsRouter.get('/:id', (req, res) => {
-    const foundPost = DB_Posts.find(item => item.id === req.params.id)
-    if (foundPost) {
-        res.status(200).send(foundPost);
-    } else {
-        res.sendStatus(404)
-    }
+postsRouter.get('/:id', async (req, res) => {
+    let post = await postsRepositoriy.getPostById(req.params.id)
+    res.status(200).send(post);
 
 })
 
@@ -42,17 +41,19 @@ postsRouter.post('/',
     contentPostValidate,
     blogIdPostValidate,
     inputValidationMiddleware,
-    (req:RequestWithBody<PostType>, res: Response) => {
-    let newPost = {
-        id: Date.now().toString(),
-        title: req.body.title,
-        shortDescription: req.body.shortDescription,
-        content: req.body.content,
-        blogId: req.body.blogId,
-        blogName: foundedBlog(req.body.blogId)
-    }
-    DB_Posts.push(newPost);
-    res.status(201).send(newPost)
+    async (req:RequestWithBody<PostType>, res: Response) => {
+
+    const newPost = await postsRepositoriy.createPost(req.body.title,
+             req.body.shortDescription,
+             req.body.content,
+            req.body.blogId,
+             )
+
+        if(newPost){
+            res.status(201).send(newPost)
+        }else {
+            res.sendStatus(404)
+        }
 
 })
 
@@ -64,31 +65,24 @@ postsRouter.put('/:id',
     contentPostValidate,
     blogIdPostValidate,
     inputValidationMiddleware,
-    (req:RequestWithBodyAndQuery<PostType>, res) => {
-    let findBlog  = DB_Posts.find(p => p.id === req.params.id)
-    let index = DB_Posts.findIndex(c => c.id === req.params.id)
-    if (findBlog){
-        findBlog = {...findBlog, ...req.body};
-    } else {
-        res.sendStatus(404)
-        return
-    }
+    async (req:RequestWithBodyAndQuery<PostType>, res) => {
+        let findPost = await postsRepositoriy.updatePost(req.params.id ,req.params.title, req.body.shortDescription, req.body.content, req.body.blogId)
+
+        if (findPost){
+            res.sendStatus(204)
+        }else {
+            res.sendStatus(404)
+        }
 
 
-    DB_Posts.splice(index, 1, findBlog)
-    res.sendStatus(204).send(findBlog)
+
+
 })
 
-postsRouter.delete('/:id', authMiddleware,(req:RequestWithBodyAndQuery<PostType>, res: Response)=> {
-    let foundPosts = DB_Posts.filter((item) => item.id !== req.params.id)
-    if (foundPosts !== undefined) {
-        if (foundPosts.length == DB_Posts.length) {
-            res.sendStatus(404)
-            return
-        }else {
-            setDB_Posts(foundPosts)
-            res.sendStatus(204)
-        }
+postsRouter.delete('/:id', authMiddleware, async (req:RequestWithBodyAndQuery<PostType>, res: Response)=> {
+    let foundPosts = await postsRepositoriy.deletePost(req.params.id)
+    if (foundPosts){
+        res.sendStatus(204)
     }else {
         res.sendStatus(404)
     }

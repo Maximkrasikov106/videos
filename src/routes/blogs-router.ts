@@ -6,14 +6,15 @@ import {RequestWithBody, RequestWithBodyAndQuery} from "../types";
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
-import {blogsRepositoriy} from "../repositories/blogs-repositoriy";
+import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 export const blogsRouter = Router({})
 
 
 
 
-blogsRouter.get('/', (req: Request, res: Response)=> {
-    res.status(200).send(DB_Blogs);
+blogsRouter.get('/', async (req: Request, res: Response)=> {
+    let blogs = await blogsRepositoriy.getBlogs()
+    res.status(200).send(blogs);
 });
 
 
@@ -31,8 +32,12 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 
     const newBlog = await blogsRepositoriy.createBlog(req.body.name, req.body.description, req.body.websiteUrl)
 
-        DB_Blogs.push(newBlog)
-        res.status(201).send(newBlog)
+        if(newBlog){
+            res.status(201).send(newBlog)
+        }else {
+            res.sendStatus(404)
+        }
+
 
 })
 
@@ -55,7 +60,7 @@ blogsRouter.put('/:id',
     websiteUrlValidate,
     inputValidationMiddleware,
     async (req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
-    let findBlog = await blogsRepositoriy.updateBlog(req.params.id, req.body)
+    let findBlog = await blogsRepositoriy.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
 
     if (findBlog){
         res.sendStatus(204)
