@@ -24,7 +24,7 @@ export const postsRepositoriy = {
             blogId: blogId,
             blogName: foundedBlog(blogId),
             isMembership: false,
-            createdAt: new Date(Date.now()).toString()
+            createdAt: new Date(Date.now())
         }
 
         await client.db("soc").collection<PostType>("posts").insertOne(newPost)

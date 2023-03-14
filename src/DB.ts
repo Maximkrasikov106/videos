@@ -71,7 +71,7 @@ export type PostType = {
     content: string,
     blogId: string,
     blogName: string | undefined,
-    createdAt: string ,
+    createdAt: string | Date ,
     isMembership: boolean
 }
 
@@ -92,7 +92,7 @@ export type TypesVid = {
     author: string,
     canBeDownloaded: boolean,
     minAgeRestriction: null | number,
-    createdAt: string | Date,
+    createdAt: string ,
     publicationDate: string,
     availableResolutions:string[]
 }
