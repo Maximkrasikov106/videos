@@ -24,7 +24,7 @@ export const blogsRepositoriy = {
             description: description,
             websiteUrl: websiteUrl,
             sMembership: false,
-            createdAt: Date.now().toString()
+            createdAt: new Date(Date.now()).toString()
         }
 
         await client.db("soc").collection<BlogsType>("blogs").insertOne(newBlog)
