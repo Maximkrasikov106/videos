@@ -23,7 +23,7 @@ export const postsRepositoriy = {
             content: content,
             blogId: blogId,
             blogName: foundedBlog(blogId),
-            sMembership: false,
+            isMembership: false,
             createdAt: new Date(Date.now()).toString()
         }
 

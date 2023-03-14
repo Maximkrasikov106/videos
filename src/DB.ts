@@ -47,7 +47,7 @@ export let DB_Blogs:BlogsType[] = [
             description: 'asdasdasd',
             websiteUrl: "https://kek.org",
             createdAt: "1233123",
-            sMembership: false
+            isMembership: false
         }
 ]
 
@@ -60,7 +60,7 @@ export let DB_Posts:PostType[] = [
         blogId: "232",
         blogName: "asdsadasd",
         createdAt: "1233123",
-        sMembership: false
+        isMembership: false
     }
 ]
 
@@ -71,8 +71,8 @@ export type PostType = {
     content: string,
     blogId: string,
     blogName: string | undefined,
-    createdAt: string,
-    sMembership: boolean
+    createdAt: string ,
+    isMembership: boolean
 }
 
 
@@ -82,8 +82,8 @@ export type BlogsType =  {
     name: string,
     description: string,
     websiteUrl: string,
-    createdAt: string,
-    sMembership: boolean
+    createdAt: string | Date,
+    isMembership: boolean
 }
 
 export type TypesVid = {
@@ -92,7 +92,7 @@ export type TypesVid = {
     author: string,
     canBeDownloaded: boolean,
     minAgeRestriction: null | number,
-    createdAt: string,
+    createdAt: string | Date,
     publicationDate: string,
     availableResolutions:string[]
 }
