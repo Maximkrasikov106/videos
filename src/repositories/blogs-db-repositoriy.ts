@@ -4,16 +4,16 @@ import {noIdBlog} from "../function/MappingId";
 export const blogsRepositoriy = {
     async getBlogs() {
 
-        let  blogs : BlogsType[]  = await client.db("soc").collection<BlogsType>("blogs").find({}).toArray()
+        let  blogs : BlogsType[] | undefined  = await client.db("soc").collection<BlogsType>("blogs").find({}).toArray()
         if (blogs){
             return noIdBlog(blogs)
         }
 
     },
-   async getBlogById(id: string): Promise<BlogsType[] | null> {
+   async getBlogById(id: string): Promise<BlogsType | null> {
 
-       let  blog: BlogsType[] | null = await client.db("soc").collection<BlogsType[]>("blogs").findOne({id: id})
-       return blog ? noIdBlog(blog) : null
+       let  blog: BlogsType | null = await client.db("soc").collection<BlogsType>("blogs").findOne({id: id})
+       return blog ? blog : null
 
     },
     async createBlog(name: string, description: string, websiteUrl: string) {

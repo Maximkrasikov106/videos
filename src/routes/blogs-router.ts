@@ -2,26 +2,29 @@ import {Request, Response, Router} from "express";
 import { body, validationResult } from 'express-validator';
 import {BlogsType, DB, DB_Blogs, setDB_Blogs} from "../DB"
 
-import {RequestWithBody, RequestWithBodyAndQuery} from "../types";
+import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel} from "../types";
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
 import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
+import {idBlog, noIdBlog} from "../function/MappingId";
 export const blogsRouter = Router({})
 
 
 
 
 blogsRouter.get('/', async (req: Request, res: Response)=> {
-    let blogs = await blogsRepositoriy.getBlogs()
-    res.status(200).send(blogs);
+
+    let blogs : BlogsType[] | undefined = await blogsRepositoriy.getBlogs()
+
+    res.status(200).send( blogs ? noIdBlog(blogs) : undefined );
 });
 
 
 blogsRouter.get('/:id', async (req , res)=> {
-    const foundBlog = await blogsRepositoriy.getBlogById(req.params.id)
+    const foundBlog: BlogsType | null = await blogsRepositoriy.getBlogById(req.params.id)
     if (foundBlog){
-        res.status(200).send(foundBlog);
+        res.status(200).send( idBlog(foundBlog));
     }else{
         res.sendStatus(404);
     }
