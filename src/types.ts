@@ -9,3 +9,13 @@ export type RequestWithBodyAndQuery< T> = Request<{
     title: string;
     id: string;
 },{},T>
+
+
+export type viewBlogModel = {
+    id: string ,
+    name: string,
+    description: string,
+    websiteUrl: string,
+    createdAt: string | Date,
+    isMembership: boolean
+}
