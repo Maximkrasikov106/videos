@@ -36,7 +36,7 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
     const newBlog = await blogsRepositoriy.createBlog(req.body.name, req.body.description, req.body.websiteUrl)
 
         if(newBlog){
-            res.status(201).send(newBlog)
+            res.status(201).send(idBlog(newBlog))
         }else {
             res.sendStatus(404)
         }
