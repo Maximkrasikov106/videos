@@ -42,7 +42,7 @@ export function noIdPosts(array: Array<viewPostModel> ) {
             blogId: post.blogId,
             blogName: post.blogName,
             createdAt: post.createdAt ,
-            isMembership: post.isMembership,
+
         }
     })
 }
@@ -56,6 +56,6 @@ export function noIdPost(post: viewPostModel )  {
         blogId: post.blogId,
         blogName: post.blogName,
         createdAt: post.createdAt ,
-        isMembership: post.isMembership,
+
     }
 }
