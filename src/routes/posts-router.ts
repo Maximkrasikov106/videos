@@ -52,7 +52,7 @@ postsRouter.post('/',
              )
 
         if(newPost){
-            res.status(201).send(newPost)
+            res.status(201).send(newPost ? noIdPost(newPost) : null)
         }else {
             res.sendStatus(404)
         }
