@@ -1,5 +1,6 @@
 import {body, validationResult} from "express-validator";
-import {DB_Blogs} from "../DB";
+import {BlogsType, client, DB_Blogs} from "../DB";
+
 
 export const titlePostValidate = body('title', ).trim().isLength({
     min: 1,
@@ -14,9 +15,11 @@ export const contentPostValidate = body('content', ).isString().trim().isLength(
     max: 1000
 }).withMessage('content')
 
-export const blogIdPostValidate = body('blogId', ).custom((value, {req: Request}) => {
-    const blogs = DB_Blogs.find(item => value === item.id)
-    if (blogs) {
+export const blogIdPostValidate = body('blogId', ).custom( async (value) => {
+    const blogs = await client.db("soc").collection<BlogsType>("blogs").findOne({id: value})
+    if (blogs == null) {
+        throw new Error('blogId');
+    }else {
         return true;
     }
 }).withMessage('blogId')

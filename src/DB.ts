@@ -70,7 +70,7 @@ export type PostType = {
     shortDescription: string,
     content: string,
     blogId: string,
-    blogName: string | undefined,
+    blogName: any,
     createdAt: string | Date ,
     isMembership: boolean
 }

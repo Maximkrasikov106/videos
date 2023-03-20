@@ -1,5 +1,5 @@
 import {Request, Response, Router} from "express";
-import {BlogsType, DB_Blogs, DB_Posts, PostType, setDB_Blogs, setDB_Posts} from "../DB";
+import {BlogsType, client, DB_Blogs, DB_Posts, PostType, setDB_Blogs, setDB_Posts} from "../DB";
 import {RequestWithBody, RequestWithBodyAndQuery} from "../types";
 import {authMiddleware} from "../midlewares/auth-middleware";
 import {
@@ -12,12 +12,13 @@ import {inputValidationMiddleware} from "../midlewares/input-validation-middlewa
 import {postsRepositoriy} from "../repositories/post-db-repositoryes";
 import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 
- export function  foundedBlog(id: string) {
-    let foundBlog : BlogsType | undefined = DB_Blogs.find(item => item.id === id)
-    if (foundBlog){
-        return foundBlog.name
-    }
-}
+ export async function foundedBlog(id: string) {
+
+     let foundBlog: BlogsType | null  = await client.db("soc").collection<BlogsType>("blogs").findOne({id: id})
+     if (foundBlog) {
+         return foundBlog.name.toString()
+     }
+ }
 
 export const postsRouter = Router({})
 

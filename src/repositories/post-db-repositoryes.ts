@@ -16,13 +16,14 @@ export const postsRepositoriy = {
     },
     async createPost( title: string, shortDescription: string, content: string,
                      blogId: string ) {
+
         let newPost:PostType = {
             id: Date.now().toString(),
             title: title,
             shortDescription: shortDescription,
             content: content,
             blogId: blogId,
-            blogName: foundedBlog(blogId),
+            blogName: await foundedBlog(blogId),
             isMembership: false,
             createdAt: new Date(Date.now())
         }
