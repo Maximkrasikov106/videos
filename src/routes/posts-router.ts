@@ -10,7 +10,7 @@ import {
 } from "../validators/validators-posts";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {postsRepositoriy} from "../repositories/post-db-repositoryes";
-import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
+
 import {noIdPost, noIdPosts} from "../function/MappingId";
 
  export async function foundedBlog(id: string) {
