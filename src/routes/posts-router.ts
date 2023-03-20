@@ -26,12 +26,17 @@ export const postsRouter = Router({})
 
 postsRouter.get('/', async (req, res) => {
     let posts: PostType[] | null = await postsRepositoriy.getPosts()
+
     res.status(200).send(posts ? noIdPosts(posts) : null)
 })
 
 
 postsRouter.get('/:id', async (req, res) => {
     let post : PostType | null = await postsRepositoriy.getPostById(req.params.id)
+    console.log(post)
+    if (post == null){
+        res.sendStatus(404)
+    }
     res.status(200).send( post ? noIdPost(post) : null);
 
 })
