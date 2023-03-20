@@ -19,3 +19,15 @@ export type viewBlogModel = {
     createdAt: string | Date,
     isMembership: boolean
 }
+
+
+export type viewPostModel = {
+    id: string,
+    title: string,
+    shortDescription: string,
+    content: string,
+    blogId: string,
+    blogName: any,
+    createdAt: string | Date ,
+    isMembership: boolean
+}

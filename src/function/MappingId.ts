@@ -1,5 +1,5 @@
 import {BlogsType} from "../DB";
-import {viewBlogModel} from "../types";
+import {viewBlogModel, viewPostModel} from "../types";
 
 
 export function noIdBlog(array: Array<viewBlogModel> ) {
@@ -26,5 +26,36 @@ export function idBlog(blog: viewBlogModel )  {
             createdAt: blog.createdAt,
             isMembership: blog.isMembership
 
+    }
+}
+
+export function noIdPosts(array: Array<viewPostModel> ) {
+
+    return array.map((post) => {
+
+
+        return {
+            id: post.id,
+            title: post.title,
+            shortDescription: post.shortDescription,
+            content: post.content,
+            blogId: post.blogId,
+            blogName: post.blogName,
+            createdAt: post.createdAt ,
+            isMembership: post.isMembership,
+        }
+    })
+}
+
+export function noIdPost(post: viewPostModel )  {
+    return {
+        id: post.id,
+        title: post.title,
+        shortDescription: post.shortDescription,
+        content: post.content,
+        blogId: post.blogId,
+        blogName: post.blogName,
+        createdAt: post.createdAt ,
+        isMembership: post.isMembership,
     }
 }
