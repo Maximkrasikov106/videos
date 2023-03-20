@@ -36,6 +36,7 @@ postsRouter.get('/:id', async (req, res) => {
     console.log(post)
     if (post == null){
         res.sendStatus(404)
+        return
     }
     res.status(200).send( post ? noIdPost(post) : null);
 
