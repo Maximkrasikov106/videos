@@ -68,7 +68,7 @@ postsRouter.put('/:id',
     blogIdPostValidate,
     inputValidationMiddleware,
     async (req:RequestWithBodyAndQuery<PostType>, res) => {
-        let findPost = await postsRepositoriy.updatePost(req.params.id ,req.params.title, req.body.shortDescription, req.body.content, req.body.blogId)
+        let findPost = await postsRepositoriy.updatePost(req.params.id ,req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
 
         if (findPost){
             res.sendStatus(204)
