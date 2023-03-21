@@ -9,6 +9,7 @@ import {authMiddleware} from "../midlewares/auth-middleware";
 import {idBlog, noIdBlog, noIdPost} from "../function/MappingId";
 import {blogsService} from "../domain/blog-service";
 import {
+    blogIdParamPostValidate,
     blogIdPostValidate,
     contentPostValidate,
     ShortDescriptionPostValidate,
@@ -95,7 +96,7 @@ blogsRouter.post('/:blogId/posts',
     titlePostValidate,
     ShortDescriptionPostValidate,
     contentPostValidate,
-
+    blogIdParamPostValidate,
     inputValidationMiddleware,
     async (req: Request, res:Response) => {
     let newBLogPost = await blogsService.CreateBlogPosts(req.params.blogId, req.body.title, req.body.shortDescription, req.body.content)
