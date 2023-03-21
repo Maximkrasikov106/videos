@@ -9,9 +9,10 @@ import {
     titlePostValidate
 } from "../validators/validators-posts";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
-import {postsRepositoriy} from "../repositories/post-db-repositoryes";
+
 
 import {noIdPost, noIdPosts} from "../function/MappingId";
+import {postsService} from "../domain/posts-service";
 
  export async function foundedBlog(id: string) {
 
@@ -25,14 +26,14 @@ export const postsRouter = Router({})
 
 
 postsRouter.get('/', async (req, res) => {
-    let posts: PostType[] | null = await postsRepositoriy.getPosts()
+    let posts: PostType[] | null = await postsService.getPosts()
 
     res.status(200).send(posts ? noIdPosts(posts) : null)
 })
 
 
 postsRouter.get('/:id', async (req, res) => {
-    let post : PostType | null = await postsRepositoriy.getPostById(req.params.id)
+    let post : PostType | null = await postsService.getPostById(req.params.id)
     console.log(post)
     if (post == null){
         res.sendStatus(404)
@@ -51,7 +52,7 @@ postsRouter.post('/',
     inputValidationMiddleware,
     async (req:RequestWithBody<PostType>, res: Response) => {
 
-    const newPost = await postsRepositoriy.createPost(req.body.title,
+    const newPost = await postsService.createPost(req.body.title,
              req.body.shortDescription,
              req.body.content,
             req.body.blogId,
@@ -74,7 +75,7 @@ postsRouter.put('/:id',
     blogIdPostValidate,
     inputValidationMiddleware,
     async (req:RequestWithBodyAndQuery<PostType>, res) => {
-        let findPost = await postsRepositoriy.updatePost(req.params.id ,req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
+        let findPost = await postsService.updatePost(req.params.id ,req.body.title, req.body.shortDescription, req.body.content, req.body.blogId)
 
         if (findPost){
             res.sendStatus(204)
@@ -88,7 +89,7 @@ postsRouter.put('/:id',
 })
 
 postsRouter.delete('/:id', authMiddleware, async (req:RequestWithBodyAndQuery<PostType>, res: Response)=> {
-    let foundPosts = await postsRepositoriy.deletePost(req.params.id)
+    let foundPosts = await postsService.deletePost(req.params.id)
     if (foundPosts){
         res.sendStatus(204)
     }else {

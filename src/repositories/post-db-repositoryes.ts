@@ -14,19 +14,7 @@ export const postsRepositoriy = {
             .collection<PostType>("posts").find({}).toArray()
         return posts || null;
     },
-    async createPost( title: string, shortDescription: string, content: string,
-                     blogId: string ) {
-//test
-        let newPost:PostType = {
-            id: Date.now().toString(),
-            title: title,
-            shortDescription: shortDescription,
-            content: content,
-            blogId: blogId,
-            blogName: await foundedBlog(blogId),
-            isMembership: false,
-            createdAt: new Date(Date.now())
-        }
+    async createPost( newPost: PostType ) {
 
         await client.db("soc").collection<PostType>("posts").insertOne(newPost)
         return newPost
@@ -36,11 +24,11 @@ export const postsRepositoriy = {
         collection<PostType>("posts").
         updateOne({id: id},
             {$set: {title:title,shortDescription: shortDescription,content: content,blogId: blogId }})
-        return update.modifiedCount > 0;
+        return update.modifiedCount;
 
     },async deletePost(id: string) {
         let deletePost = await client.db("soc").collection<PostType>("posts").deleteOne({id :id})
-        return deletePost.deletedCount > 0;
+        return deletePost.deletedCount;
 
     }
 

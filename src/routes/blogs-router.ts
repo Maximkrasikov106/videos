@@ -6,8 +6,8 @@ import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel} from "../types"
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
-import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 import {idBlog, noIdBlog} from "../function/MappingId";
+import {blogsService} from "../domain/blog-service";
 export const blogsRouter = Router({})
 
 
@@ -15,14 +15,14 @@ export const blogsRouter = Router({})
 
 blogsRouter.get('/', async (req: Request, res: Response)=> {
 
-    let blogs : BlogsType[] | undefined = await blogsRepositoriy.getBlogs()
+    let blogs : BlogsType[] | undefined = await blogsService.getBlogs()
 
     res.status(200).send( blogs ? noIdBlog(blogs) : undefined );
 });
 
 
 blogsRouter.get('/:id', async (req , res)=> {
-    const foundBlog: BlogsType | null = await blogsRepositoriy.getBlogById(req.params.id)
+    const foundBlog: BlogsType | null = await blogsService.getBlogById(req.params.id)
     if (foundBlog){
         res.status(200).send( idBlog(foundBlog));
     }else{
@@ -33,7 +33,7 @@ blogsRouter.get('/:id', async (req , res)=> {
 blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,websiteUrlValidate,inputValidationMiddleware,
     async (req: RequestWithBody<BlogsType>, res: Response, ) => {
 
-    const newBlog = await blogsRepositoriy.createBlog(req.body.name, req.body.description, req.body.websiteUrl)
+    const newBlog = await blogsService.createBlog(req.body.name, req.body.description, req.body.websiteUrl)
 
         if(newBlog){
             res.status(201).send(idBlog(newBlog))
@@ -46,7 +46,7 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 
 
 blogsRouter.delete('/:id', authMiddleware, async (req, res: Response)=> {
-   let foundBlogs = await blogsRepositoriy.deleteBlog(req.params.id)
+   let foundBlogs = await blogsService.deleteBlog(req.params.id)
     if (foundBlogs){
         res.sendStatus(204)
     }else {
@@ -63,7 +63,7 @@ blogsRouter.put('/:id',
     websiteUrlValidate,
     inputValidationMiddleware,
     async (req: RequestWithBodyAndQuery<BlogsType>, res: Response)=> {
-    let findBlog = await blogsRepositoriy.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
+    let findBlog = await blogsService.updateBlog(req.params.id, req.body.name, req.body.description, req.body.websiteUrl)
 
     if (findBlog){
         res.sendStatus(204)
