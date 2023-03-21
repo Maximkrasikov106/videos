@@ -30,5 +30,14 @@ export const blogsRepositoriy = {
         let deleteBlog = await client.db("soc").collection<BlogsType>("blogs").deleteOne({id :id})
         return deleteBlog.deletedCount;
 
+    },
+
+    async getBlogPost(blogId: string) {
+        let foundBlogPost = await client.db("soc").collection("blogs").findOne({blogId: blogId})
+        return foundBlogPost;
+    },
+    async CreateBlogPost(newBLogPost : any) {
+        await client.db("soc").collection<BlogsType>("blogs").insertOne(newBLogPost)
+        return newBLogPost
     }
 }

@@ -15,7 +15,7 @@ export const postsService = {
     },
     async createPost( title: string, shortDescription: string, content: string,
                       blogId: string ) {
-//test
+
         let newPost:PostType = {
             id: Date.now().toString(),
             title: title,

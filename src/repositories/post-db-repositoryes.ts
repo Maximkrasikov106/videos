@@ -30,7 +30,8 @@ export const postsRepositoriy = {
         let deletePost = await client.db("soc").collection<PostType>("posts").deleteOne({id :id})
         return deletePost.deletedCount;
 
-    }
+    },
+
 
 
 }

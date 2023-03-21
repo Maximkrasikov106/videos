@@ -8,6 +8,12 @@ import {inputValidationMiddleware} from "../midlewares/input-validation-middlewa
 import {authMiddleware} from "../midlewares/auth-middleware";
 import {idBlog, noIdBlog} from "../function/MappingId";
 import {blogsService} from "../domain/blog-service";
+import {
+    blogIdPostValidate,
+    contentPostValidate,
+    ShortDescriptionPostValidate,
+    titlePostValidate
+} from "../validators/validators-posts";
 export const blogsRouter = Router({})
 
 
@@ -71,4 +77,32 @@ blogsRouter.put('/:id',
         res.sendStatus(404)
     }
 
+
+});
+
+blogsRouter.get('/:blogId/posts', async (req: Request,
+                                         res:Response) => {
+    let BlogPosts = await blogsService.getBlogPosts(req.params.blogId)
+    if (!BlogPosts){
+        res.sendStatus(404)
+        return
+    }
+    res.status(200).send(BlogPosts)
+    });
+
+blogsRouter.post('/:blogId/posts',
+    authMiddleware,
+    titlePostValidate,
+    ShortDescriptionPostValidate,
+    contentPostValidate,
+    blogIdPostValidate,
+    inputValidationMiddleware,
+    async (req: Request, res:Response) => {
+    let newBLogPost = await blogsService.CreateBlogPosts(req.params.blogId, req.body.title, req.body.shortDescription, req.body.content)
+    if (!newBLogPost){
+        res.sendStatus(404)
+        return
+    }
+    let getBlogPost = await blogsService.getBlogPosts(newBLogPost.blogId)
+    res.status(201).send(getBlogPost)
 });
