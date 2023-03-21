@@ -55,7 +55,9 @@ export const blogsService = {
             isMembership: false,
             createdAt: new Date(Date.now())
         }
-
+        if (newBlogPost.blogName == null){
+            return null
+        }
         return await blogsRepositoriy.CreateBlogPost(newBlogPost)
     }
 
