@@ -33,11 +33,11 @@ export const blogsRepositoriy = {
     },
 
     async getBlogPost(blogId: string) {
-        let foundBlogPost = await client.db("soc").collection("blogs").findOne({blogId: blogId})
+        let foundBlogPost = await client.db("soc").collection("posts").findOne({blogId: blogId})
         return foundBlogPost;
     },
     async CreateBlogPost(newBLogPost : any) {
-        await client.db("soc").collection<BlogsType>("blogs").insertOne(newBLogPost)
+        await client.db("soc").collection<BlogsType>("posts").insertOne(newBLogPost)
         return newBLogPost
     }
 }

@@ -95,7 +95,7 @@ blogsRouter.post('/:blogId/posts',
     titlePostValidate,
     ShortDescriptionPostValidate,
     contentPostValidate,
-    blogIdPostValidate,
+
     inputValidationMiddleware,
     async (req: Request, res:Response) => {
     let newBLogPost = await blogsService.CreateBlogPosts(req.params.blogId, req.body.title, req.body.shortDescription, req.body.content)
