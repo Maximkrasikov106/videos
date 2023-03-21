@@ -2,11 +2,11 @@ import {Request, Response, Router} from "express";
 import { body, validationResult } from 'express-validator';
 import {BlogsType, DB, DB_Blogs, setDB_Blogs} from "../DB"
 
-import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel} from "../types";
+import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel, viewPostModel} from "../types";
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
-import {idBlog, noIdBlog} from "../function/MappingId";
+import {idBlog, noIdBlog, noIdPost} from "../function/MappingId";
 import {blogsService} from "../domain/blog-service";
 import {
     blogIdPostValidate,
@@ -82,12 +82,12 @@ blogsRouter.put('/:id',
 
 blogsRouter.get('/:blogId/posts', async (req: Request,
                                          res:Response) => {
-    let BlogPosts = await blogsService.getBlogPosts(req.params.blogId)
+    let BlogPosts: any = await blogsService.getBlogPosts(req.params.blogId)
     if (!BlogPosts){
         res.sendStatus(404)
         return
     }
-    res.status(200).send(BlogPosts)
+    res.status(200).send(noIdPost(BlogPosts))
     });
 
 blogsRouter.post('/:blogId/posts',
@@ -103,6 +103,6 @@ blogsRouter.post('/:blogId/posts',
         res.sendStatus(404)
         return
     }
-    let getBlogPost = await blogsService.getBlogPosts(newBLogPost.blogId)
-    res.status(201).send(getBlogPost)
+    let getBlogPost : any = await blogsService.getBlogPosts(newBLogPost.blogId)
+    res.status(201).send(getBlogPost ? noIdPost(getBlogPost) : null )
 });
