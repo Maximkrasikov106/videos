@@ -1,7 +1,7 @@
 import {BlogsType } from "../DB";
 import {noIdBlog} from "../function/MappingId";
 import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
-import {foundedBlog} from "../routes/posts-router";
+import {foundedBlog, foundedDate} from "../routes/posts-router";
 
 export const blogsService = {
     async getBlogs() {
@@ -54,7 +54,7 @@ export const blogsService = {
             blogId: blogId,
             blogName: await foundedBlog(blogId),
             isMembership: false,
-            createdAt: new Date(Date.now())
+            createdAt:foundedDate(blogId)
         }
         if (newBlogPost.blogName == null){
             return null

@@ -22,6 +22,14 @@ import {postsService} from "../domain/posts-service";
      }
  }
 
+export async function foundedDate(id: string) {
+
+    let foundDate: BlogsType | null  = await client.db("soc").collection<BlogsType>("blogs").findOne({id: id})
+    if (foundDate) {
+        return foundDate.createdAt
+    }
+}
+
 export const postsRouter = Router({})
 
 
