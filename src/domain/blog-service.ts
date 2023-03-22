@@ -49,7 +49,7 @@ export const blogsService = {
 
         let newBlogPost = {
             id: '123',
-            title: title,
+            title: 'title',
             shortDescription: shortDescription,
             content: content,
             blogId: blogId,
