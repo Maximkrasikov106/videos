@@ -84,7 +84,7 @@ blogsRouter.put('/:id',
 blogsRouter.get('/:blogId/posts', async (req: Request,
                                          res:Response) => {
     let BlogPosts: any = await blogsService.getBlogPosts(req.params.blogId)
-    if (!BlogPosts){
+    if (BlogPosts.length === 0){
         res.sendStatus(404)
         return
     }
