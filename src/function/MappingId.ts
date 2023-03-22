@@ -66,8 +66,8 @@ export function vievQueryP(items: any, sortBy: string, limit: string | number, p
     let [number, size] = [+pageNum - 1, +limit]
     return {
         pagesCount: Math.ceil(12 / size),
-        page: pageNum,
-        pageSize: limit,
+        page: +pageNum,
+        pageSize: +limit,
         totalCount: 12,
         items: items
     }
