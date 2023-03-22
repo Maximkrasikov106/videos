@@ -36,7 +36,9 @@ export const blogsRepositoriy = {
     async getBlogPost(blogId: string, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
         const createSortObj = (sortKey: string, sortDirection: string) => {
             let sortOj: any = {}
+
             sortOj[sortKey] = sortDirection === 'asc' ? 1 : -1
+            console.log(sortOj)
             return sortOj
         }
 
