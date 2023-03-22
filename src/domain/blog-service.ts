@@ -42,6 +42,7 @@ export const blogsService = {
     },
     async getBlogPosts(blogId: string) {
         let getPost = await blogsRepositoriy.getBlogPost(blogId)
+        console.log(getPost)
         return getPost
     },
     async CreateBlogPosts (blogId: string, title : string, shortDescription: string, content: string) {
@@ -59,6 +60,10 @@ export const blogsService = {
             return null
         }
         return await blogsRepositoriy.CreateBlogPost(newBlogPost)
+    },
+    async getBlogPost(blogId: string) {
+        let getPost = await blogsRepositoriy.getPost(blogId)
+        return getPost
     }
 
 }

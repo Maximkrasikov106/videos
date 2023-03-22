@@ -6,7 +6,7 @@ import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel, viewPostModel} 
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
-import {idBlog, noIdBlog, noIdPost} from "../function/MappingId";
+import {idBlog, noIdBlog, noIdPost, noIdPosts} from "../function/MappingId";
 import {blogsService} from "../domain/blog-service";
 import {
     blogIdParamPostValidate,
@@ -88,7 +88,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request,
         res.sendStatus(404)
         return
     }
-    res.status(200).send(noIdPost(BlogPosts))
+    res.status(200).send(noIdPosts(BlogPosts))
     });
 
 blogsRouter.post('/:blogId/posts',
@@ -104,6 +104,6 @@ blogsRouter.post('/:blogId/posts',
         res.sendStatus(404)
         return
     }
-    let getBlogPost : any = await blogsService.getBlogPosts(newBLogPost.blogId)
+    let getBlogPost : any = await blogsService.getBlogPost(newBLogPost.blogId)
     res.status(201).send(getBlogPost ? noIdPost(getBlogPost) : null )
 });

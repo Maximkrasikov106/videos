@@ -32,12 +32,21 @@ export const blogsRepositoriy = {
 
     },
 
+
     async getBlogPost(blogId: string) {
-        let foundBlogPost = await client.db("soc").collection("posts").findOne({blogId: blogId})
+        let foundBlogPost = await client.db("soc").collection("posts").find({blogId: blogId}).toArray()
+
         return foundBlogPost;
     },
     async CreateBlogPost(newBLogPost : any) {
-        await client.db("soc").collection<BlogsType>("posts").insertOne(newBLogPost)
+        await client.db("soc").collection("posts").insertOne(newBLogPost)
         return newBLogPost
+    },
+    async getPost(blogId: string){
+        let foundBlogPost = await client.db("soc").collection("posts").findOne({blogId: blogId})
+
+        return foundBlogPost;
     }
+
+
 }
