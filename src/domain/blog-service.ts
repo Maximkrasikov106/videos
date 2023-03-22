@@ -40,7 +40,7 @@ export const blogsService = {
         let deleteBlog = await blogsRepositoriy.deleteBlog(id)
         return deleteBlog > 0;
     },
-    async getBlogPosts(blogId: string, sortBy: string, limit :number, pageNum: number, sortDirection: string) {
+    async getBlogPosts(blogId: string, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
         let getPost = await blogsRepositoriy.getBlogPost(blogId, sortBy , limit , pageNum, sortDirection)
         console.log(getPost)
         return getPost

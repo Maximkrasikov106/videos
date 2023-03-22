@@ -82,11 +82,12 @@ blogsRouter.put('/:id',
 });
 
 blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
-    let limit =  typeof(req.query.pageSize) == "number" ? req.query.pageSize : 10;
+    console.log(typeof(req.query.pageSize))
+    let limit =  typeof(req.query.pageSize) == "string" ? req.query.pageSize : 10;
     let sortBy = req.query.sortBy ? req.params.sortBy : 'createdAt';
-    let pageNum  = typeof(req.query.pageNumber) == "number" ? req.query.pageNumber : 1;
+    let pageNum  = typeof(req.query.pageNumber) == "string" ? req.query.pageNumber : 1;
     let sortDirection = typeof(req.query.sortDirection) == "string" ? req.query.sortDirection : 'desc';
-
+    console.log(limit)
     let BlogPosts: any = await blogsService.getBlogPosts(req.params.blogId, sortBy, limit, pageNum, sortDirection)
 
 

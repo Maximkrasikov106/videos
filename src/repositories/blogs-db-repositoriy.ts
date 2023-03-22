@@ -33,14 +33,14 @@ export const blogsRepositoriy = {
     },
 
 
-    async getBlogPost(blogId: string, sortBy: string, limit :number, pageNum: number, sortDirection: string ) {
+    async getBlogPost(blogId: string, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
         const createSortObj = (sortKey: string, sortDirection: string) => {
             let sortOj: any = {}
             sortOj[sortKey] = sortDirection === 'asc' ? 1 : -1
             return sortOj
         }
 
-        let [number, size] = [+pageNum - 1, limit]
+        let [number, size] = [+pageNum - 1, +limit]
 
         const skipElemCount = number * size
         let foundBlogPost = await client.db("soc").collection("posts").find({blogId: blogId}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
