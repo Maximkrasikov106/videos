@@ -26,6 +26,7 @@ export async function foundedDate(id: string) {
 
     let foundDate: BlogsType | null  = await client.db("soc").collection<BlogsType>("blogs").findOne({id: id})
     if (foundDate) {
+        console.log(foundDate.createdAt)
         return foundDate.createdAt
     }
 }

@@ -46,6 +46,7 @@ export const blogsService = {
         return getPost
     },
     async CreateBlogPosts (blogId: string, title : string, shortDescription: string, content: string) {
+
         let newBlogPost = {
             id: '123',
             title: title,
@@ -54,7 +55,7 @@ export const blogsService = {
             blogId: blogId,
             blogName: await foundedBlog(blogId),
             isMembership: false,
-            createdAt:foundedDate(blogId)
+            createdAt: await foundedDate(blogId)
         }
         if (newBlogPost.blogName == null){
             return null
