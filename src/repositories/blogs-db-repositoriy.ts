@@ -33,8 +33,8 @@ export const blogsRepositoriy = {
     },
 
 
-    async getBlogPost(blogId: string) {
-        let foundBlogPost = await client.db("soc").collection("posts").find({blogId: blogId}).toArray()
+    async getBlogPost(blogId: string, sortBy: string, limit :number, pageNum: number, sortDirection: string ) {
+        let foundBlogPost = await client.db("soc").collection("posts").find({blogId: blogId}).sort(sortBy).limit(limit).sort(sortDirection).toArray()
 
         return foundBlogPost;
     },

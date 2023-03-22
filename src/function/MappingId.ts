@@ -59,3 +59,13 @@ export function noIdPost(post: viewPostModel )  {
 
     }
 }
+
+export function vievQueryP(items : any, sortBy : string, limit : number, pageNum : number, sortDirection : string)  {
+    return {
+        pagesCount: 2,
+        page: pageNum,
+        pageSize: limit,
+        totalCount: 12,
+        items: items
+    }
+}

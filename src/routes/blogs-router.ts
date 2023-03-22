@@ -6,7 +6,7 @@ import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel, viewPostModel} 
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
-import {idBlog, noIdBlog, noIdPost, noIdPosts} from "../function/MappingId";
+import {idBlog, noIdBlog, noIdPost, noIdPosts, vievQueryP} from "../function/MappingId";
 import {blogsService} from "../domain/blog-service";
 import {
     blogIdParamPostValidate,
@@ -81,14 +81,21 @@ blogsRouter.put('/:id',
 
 });
 
-blogsRouter.get('/:blogId/posts', async (req: Request,
-                                         res:Response) => {
-    let BlogPosts: any = await blogsService.getBlogPosts(req.params.blogId)
+blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
+    let limit =  typeof(req.query.pageSize) == "number" ? req.query.pageSize : 10;
+    let sortBy = req.query.sortBy ? req.params.sortBy : 'createdAt';
+    let pageNum  = typeof(req.query.pageNumber) == "number" ? req.query.pageNumber : 1;
+    let sortDirection = typeof(req.query.sortDirection) == "string" ? req.query.sortDirection : 'desc';
+
+    let BlogPosts: any = await blogsService.getBlogPosts(req.params.blogId, sortBy, limit, pageNum, sortDirection)
+
+
     if (BlogPosts.length === 0){
         res.sendStatus(404)
         return
     }
-    res.status(200).send(noIdPosts(BlogPosts))
+    let items = noIdPosts(BlogPosts)
+    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection))
     });
 
 blogsRouter.post('/:blogId/posts',
