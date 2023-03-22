@@ -47,7 +47,7 @@ export const blogsService = {
     },
     async CreateBlogPosts (blogId: string, title : string, shortDescription: string, content: string) {
         let newBlogPost = {
-            id: Date.now().toString(),
+
             title: title,
             shortDescription: shortDescription,
             content: content,
