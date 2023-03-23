@@ -62,14 +62,19 @@ export function noIdPost(post: viewPostModel )  {
 
 
 
-export function  vievQueryP(items: any, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string, table: string)  {
+export async function vievQueryP(items: any, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string, table: string) {
     let [number, size] = [+pageNum - 1, +limit]
-    let totalCount =  client.db("soc").collection(table).findOne({})
+    let count = 12
+    if (table != 'blogPost'){
+        let totalCount = await client.db("soc").collection(table).find({}).toArray()
+        count = totalCount.length
+    }
+
     return {
-        pagesCount: Math.ceil(12 / size),
+        pagesCount: Math.ceil(count / size),
         page: +pageNum,
         pageSize: +limit,
-        totalCount: 12,
+        totalCount: count,
         items: items
     }
 }
