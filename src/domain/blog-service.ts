@@ -4,9 +4,9 @@ import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 import {foundedBlog, foundedDate} from "../routes/posts-router";
 
 export const blogsService = {
-    async getBlogs() {
+    async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
 
-        let  blogs : BlogsType[] | undefined  = await blogsRepositoriy.getBlogs()
+        let  blogs : BlogsType[] | undefined  = await blogsRepositoriy.getBlogs( sortBy, limit, pageNum, sortDirection)
         if (blogs){
             return noIdBlog(blogs)
         }

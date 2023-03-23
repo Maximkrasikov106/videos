@@ -1,9 +1,20 @@
 import {BlogsType, client} from "../DB";
+const createSortObj = (sortKey: string, sortDirection: string) => {
+    let sortOj: any = {}
+
+    sortOj[sortKey] = sortDirection === 'asc' ? 1 : -1
+    console.log(sortOj)
+    return sortOj
+}
+
 
 export const blogsRepositoriy = {
-    async getBlogs() {
+    async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
 
-        return await client.db("soc").collection<BlogsType>("blogs").find({}).toArray()
+        let [number, size] = [+pageNum - 1, +limit]
+        const skipElemCount = number * size
+
+        return await client.db("soc").collection<BlogsType>("blogs").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
 
     },
    async getBlogById(id: string): Promise<BlogsType | null> {
@@ -34,13 +45,7 @@ export const blogsRepositoriy = {
 
 
     async getBlogPost(blogId: string, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
-        const createSortObj = (sortKey: string, sortDirection: string) => {
-            let sortOj: any = {}
 
-            sortOj[sortKey] = sortDirection === 'asc' ? 1 : -1
-            console.log(sortOj)
-            return sortOj
-        }
 
         let [number, size] = [+pageNum - 1, +limit]
 
