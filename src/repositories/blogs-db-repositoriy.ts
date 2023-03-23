@@ -1,5 +1,5 @@
 import {BlogsType, client} from "../DB";
-const createSortObj = (sortKey: string, sortDirection: string) => {
+export const createSortObj = (sortKey: string, sortDirection: string) => {
     let sortOj: any = {}
 
     sortOj[sortKey] = sortDirection === 'asc' ? 1 : -1

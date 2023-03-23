@@ -1,5 +1,6 @@
 import {BlogsType, client, DB_Blogs, PostType, setDB_Blogs} from "../DB";
 import {foundedBlog} from "../routes/posts-router";
+import {createSortObj} from "./blogs-db-repositoriy";
 
 
 export const postsRepositoriy = {
@@ -9,9 +10,13 @@ export const postsRepositoriy = {
         return post || null;
     },
 
-    async getPosts(): Promise<PostType[] | null> {
+    async getPosts(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string): Promise<PostType[] | null> {
+
+        let [number, size] = [+pageNum - 1, +limit]
+        const skipElemCount = number * size
+
         let posts: PostType[] | null = await client.db("soc")
-            .collection<PostType>("posts").find({}).toArray()
+            .collection<PostType>("posts").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
         return posts || null;
     },
     async createPost( newPost: PostType ) {

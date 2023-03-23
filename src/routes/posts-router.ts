@@ -38,7 +38,13 @@ export const postsRouter = Router({})
 
 
 postsRouter.get('/', async (req, res) => {
-    let posts: PostType[] | null = await postsService.getPosts()
+    let limit =  typeof(req.query.pageSize) == "string" ? req.query.pageSize : 10;
+    let sortBy = typeof(req.query.sortBy) == "string" ? req.query.sortBy : 'createdAt';
+    let pageNum  = typeof(req.query.pageNumber) == "string" ? req.query.pageNumber : 1;
+    let sortDirection = typeof(req.query.sortDirection) == "string" ? req.query.sortDirection : 'desc';
+
+
+    let posts: PostType[] | null = await postsService.getPosts(sortBy, limit, pageNum, sortDirection)
 
     res.status(200).send(posts ? noIdPosts(posts) : null)
 })
