@@ -14,6 +14,7 @@ export const blogsRepositoriy = {
         let [number, size] = [+pageNum - 1, +limit]
         const skipElemCount = number * size
 
+
         return await client.db("soc").collection<BlogsType>("blogs").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
 
     },

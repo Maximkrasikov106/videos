@@ -31,7 +31,7 @@ blogsRouter.get('/', async (req: Request, res: Response)=> {
     let blogs : BlogsType[] | undefined = await blogsService.getBlogs( sortBy, limit, pageNum, sortDirection)
     // @ts-ignore
     let item  = noIdBlog(blogs)
-    res.status(200).send( vievQueryP(item, sortBy, limit, pageNum, sortDirection) );
+    res.status(200).send( vievQueryP(item, sortBy, limit, pageNum, sortDirection, 'blogs') );
 });
 
 
@@ -102,7 +102,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
         return
     }
     let items = noIdPosts(BlogPosts)
-    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection))
+    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, 'posts'))
     });
 
 blogsRouter.post('/:blogId/posts',

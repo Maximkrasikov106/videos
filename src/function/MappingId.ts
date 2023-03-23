@@ -1,4 +1,4 @@
-import {BlogsType} from "../DB";
+import {BlogsType, client} from "../DB";
 import {viewBlogModel, viewPostModel} from "../types";
 
 
@@ -62,14 +62,14 @@ export function noIdPost(post: viewPostModel )  {
 
 
 
-export function  vievQueryP(items: any, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string)  {
+export function  vievQueryP(items: any, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string, table: string)  {
     let [number, size] = [+pageNum - 1, +limit]
-    let totalCount =  items.count()
+    let totalCount =  client.db("soc").collection(table).findOne({})
     return {
-        pagesCount: Math.ceil(totalCount / size),
+        pagesCount: Math.ceil(12 / size),
         page: +pageNum,
         pageSize: +limit,
-        totalCount: totalCount,
+        totalCount: 12,
         items: items
     }
 }

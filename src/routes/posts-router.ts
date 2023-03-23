@@ -48,7 +48,7 @@ postsRouter.get('/', async (req, res) => {
 
     // @ts-ignore
     let item = noIdPost(posts)
-    res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection))
+    res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection, 'posts'))
 })
 
 
