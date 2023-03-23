@@ -64,8 +64,9 @@ export function noIdPost(post: viewPostModel )  {
 
 export function vievQueryP(items: any, sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string)  {
     let [number, size] = [+pageNum - 1, +limit]
+
     return {
-        pagesCount: Math.ceil(12 / size),
+        pagesCount: Math.ceil(items.length / size),
         page: +pageNum,
         pageSize: +limit,
         totalCount: 12,

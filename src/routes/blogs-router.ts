@@ -23,8 +23,6 @@ export const blogsRouter = Router({})
 blogsRouter.get('/', async (req: Request, res: Response)=> {
     let limit =  typeof(req.query.pageSize) == "string" ? req.query.pageSize : 10;
     let sortBy = typeof(req.query.sortBy) == "string" ? req.query.sortBy : 'createdAt';
-
-
     let pageNum  = typeof(req.query.pageNumber) == "string" ? req.query.pageNumber : 1;
     let sortDirection = typeof(req.query.sortDirection) == "string" ? req.query.sortDirection : 'desc';
 

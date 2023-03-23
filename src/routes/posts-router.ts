@@ -11,7 +11,7 @@ import {
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 
 
-import {noIdPost, noIdPosts} from "../function/MappingId";
+import {noIdPost, noIdPosts, vievQueryP} from "../function/MappingId";
 import {postsService} from "../domain/posts-service";
 
  export async function foundedBlog(id: string) {
@@ -46,7 +46,9 @@ postsRouter.get('/', async (req, res) => {
 
     let posts: PostType[] | null = await postsService.getPosts(sortBy, limit, pageNum, sortDirection)
 
-    res.status(200).send(posts ? noIdPosts(posts) : null)
+    // @ts-ignore
+    let item = noIdPost(posts)
+    res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection))
 })
 
 
