@@ -66,7 +66,7 @@ export  function vievQueryP(items: any, sortBy: string, limit: string | number,
                             pageNum: string | number, sortDirection: string, totalCount: number ) {
     let [number, size] = [+pageNum - 1, +limit]
 
-        totalCount = 12
+
 
 
 
