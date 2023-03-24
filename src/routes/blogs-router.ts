@@ -31,9 +31,9 @@ blogsRouter.get('/', async (req: Request, res: Response)=> {
     let blogs : BlogsType[] | undefined = await blogsService.getBlogs( sortBy, limit, pageNum, sortDirection)
     // @ts-ignore
     let item  = noIdBlog(blogs)
-    let totalCount = await client.db("soc").collection<BlogsType>("blogs").find({}).toArray()
+
     res.status(200).send( vievQueryP(item, sortBy,
-        limit, pageNum, sortDirection, totalCount.length) );
+        limit, pageNum, sortDirection, 12) );
 });
 
 
