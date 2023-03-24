@@ -1,6 +1,6 @@
 import {Request, Response, Router} from "express";
 import { body, validationResult } from 'express-validator';
-import {BlogsType, DB, DB_Blogs, setDB_Blogs} from "../DB"
+import {BlogsType, client, DB, DB_Blogs, setDB_Blogs} from "../DB"
 
 import {RequestWithBody, RequestWithBodyAndQuery, viewBlogModel, viewPostModel} from "../types";
 import {descriptionValidate, nameValidation, websiteUrlValidate} from "../validators/validation";
@@ -31,8 +31,9 @@ blogsRouter.get('/', async (req: Request, res: Response)=> {
     let blogs : BlogsType[] | undefined = await blogsService.getBlogs( sortBy, limit, pageNum, sortDirection)
     // @ts-ignore
     let item  = noIdBlog(blogs)
+    let totalCount = await client.db("soc").collection<BlogsType>("blogs").find({}).toArray()
     res.status(200).send( vievQueryP(item, sortBy,
-        limit, pageNum, sortDirection, 'blogs') );
+        limit, pageNum, sortDirection, totalCount.length) );
 });
 
 
@@ -103,7 +104,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
         return
     }
     let items = noIdPosts(BlogPosts)
-    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, 'blogPost'))
+    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, 12))
     });
 
 blogsRouter.post('/:blogId/posts',
