@@ -75,7 +75,7 @@ export  function vievQueryP(items: any, sortBy: string, limit: string | number,
         pagesCount: Math.ceil(totalCount / size),
         page: +pageNum,
         pageSize: +limit,
-        totalCount: 12,
-        items: totalCount
+        totalCount: totalCount,
+        items: items
     }
 }
