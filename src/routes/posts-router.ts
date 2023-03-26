@@ -50,6 +50,7 @@ postsRouter.get('/', async (req, res) => {
     // @ts-ignore
     let item = noIdPosts(posts)
     console.log(item)
+    console.log(count, 666)
     res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection, count))
 })
 

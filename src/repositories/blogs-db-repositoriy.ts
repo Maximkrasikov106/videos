@@ -14,9 +14,11 @@ export const blogsRepositoriy = {
 
             let [number, size] = [+pageNum - 1, +limit]
             const skipElemCount = number * size
-            console.log(SearchNameTerm, 222)
-            return  client.db("soc").collection(x).find({name: {$regex: SearchNameTerm}}).sort(createSortObj(sortBy, sortDirection)).count()
 
+
+            let x1 =  await client.db("soc").collection(x).find(SearchNameTerm ? {name: {$regex: SearchNameTerm}} : {}).sort(createSortObj(sortBy, sortDirection)).count()
+            console.log(x1, 5)
+            return x1
 
         }
     ,

@@ -100,7 +100,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
     let sortBy = typeof(req.query.sortBy) == "string" ? req.query.sortBy : 'createdAt';
     let pageNum  = typeof(req.query.pageNumber) == "string" ? req.query.pageNumber : 1;
     let sortDirection = typeof(req.query.sortDirection) == "string" ? req.query.sortDirection : 'desc';
-    let SearchNameTerm = req.query.SearchNameTerm;
+
     let BlogPosts: any = await blogsService.getBlogPosts(req.params.blogId, sortBy, limit, pageNum, sortDirection)
 
 
@@ -110,6 +110,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
     }
     let items = noIdPosts(BlogPosts)
     let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'posts')
+
     res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, count - 1))
     });
 
