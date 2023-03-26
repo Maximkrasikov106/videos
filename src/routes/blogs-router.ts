@@ -28,14 +28,14 @@ blogsRouter.get('/', async (req: Request, res: Response)=> {
     let sortDirection = typeof(req.query.sortDirection) == "string" ? req.query.sortDirection : 'desc';
     let SearchNameTerm = typeof(req.query.searchNameTerm) == "string" ? req.query.searchNameTerm : '';
 
-    console.log(SearchNameTerm, 123);
+
     // @ts-ignore
     let blogs : BlogsType[] | undefined = await blogsService.getBlogs( sortBy, limit, pageNum, sortDirection, SearchNameTerm)
     // @ts-ignore
     let item  = noIdBlog(blogs)
     // @ts-ignore
     let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection,'blogs',SearchNameTerm )
-    console.log(count, 333)
+
     res.status(200).send( vievQueryP(item, sortBy,
         limit, pageNum, sortDirection, count) );
 });

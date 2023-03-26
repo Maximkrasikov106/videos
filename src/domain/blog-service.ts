@@ -7,7 +7,7 @@ export const blogsService = {
     async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string,SearchNameTerm: string) {
 
         // @ts-ignore
-        let  blogs : BlogsType[] | undefined  = await blogsRepositoriy.getBlogs( sortBy, limit, pageNum, sortDirection)
+        let  blogs : BlogsType[] | undefined  = await blogsRepositoriy.getBlogs( sortBy, limit, pageNum, sortDirection, SearchNameTerm)
         if (blogs){
             return noIdBlog(blogs)
         }

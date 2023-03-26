@@ -26,6 +26,10 @@ export const blogsRepositoriy = {
 
         let [number, size] = [+pageNum - 1, +limit]
         const skipElemCount = number * size
+        if (SearchNameTerm.length > 1 ) {
+            return await client.db("soc").collection<BlogsType>("blogs").find({name: {$regex: SearchNameTerm}}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
+
+        }
 
         return await client.db("soc").collection<BlogsType>("blogs").find({name: {$regex: SearchNameTerm}}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
 
