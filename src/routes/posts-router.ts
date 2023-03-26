@@ -48,7 +48,8 @@ postsRouter.get('/', async (req, res) => {
     let posts: PostType[] | null = await postsService.getPosts(sortBy, limit, pageNum, sortDirection)
     let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'posts')
     // @ts-ignore
-    let item = noIdPost(posts)
+    let item = noIdPosts(posts)
+    console.log(item)
     res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection, count))
 })
 

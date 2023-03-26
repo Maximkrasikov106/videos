@@ -17,6 +17,7 @@ export const postsRepositoriy = {
 
         let posts: PostType[] | null = await client.db("soc")
             .collection<PostType>("posts").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
+
         return posts || null;
     },
     async createPost( newPost: PostType ) {

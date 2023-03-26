@@ -14,7 +14,7 @@ export const blogsRepositoriy = {
 
             let [number, size] = [+pageNum - 1, +limit]
             const skipElemCount = number * size
-            return  client.db("soc").collection(x).find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).count()
+            return  client.db("soc").collection(x).find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).count()
 
 
         }
@@ -23,7 +23,6 @@ export const blogsRepositoriy = {
 
         let [number, size] = [+pageNum - 1, +limit]
         const skipElemCount = number * size
-        let totalCount = client.db("soc").collection<BlogsType>("blogs").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).count()
 
         return await client.db("soc").collection<BlogsType>("blogs").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
 

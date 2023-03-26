@@ -11,6 +11,7 @@ export const postsService = {
 
     async getPosts(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string): Promise<PostType[] | null> {
         let posts: PostType[] | null = await postsRepositoriy.getPosts(sortBy, limit, pageNum, sortDirection)
+
         return posts || null;
     },
     async createPost( title: string, shortDescription: string, content: string,
