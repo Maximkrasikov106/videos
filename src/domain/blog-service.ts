@@ -4,7 +4,7 @@ import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 import {foundedBlog, foundedDate} from "../routes/posts-router";
 
 export const blogsService = {
-    async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
+    async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string,SearchNameTerm: string) {
 
         // @ts-ignore
         let  blogs : BlogsType[] | undefined  = await blogsRepositoriy.getBlogs( sortBy, limit, pageNum, sortDirection)
