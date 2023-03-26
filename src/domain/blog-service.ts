@@ -6,6 +6,7 @@ import {foundedBlog, foundedDate} from "../routes/posts-router";
 export const blogsService = {
     async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
 
+        // @ts-ignore
         let  blogs : BlogsType[] | undefined  = await blogsRepositoriy.getBlogs( sortBy, limit, pageNum, sortDirection)
         if (blogs){
             return noIdBlog(blogs)

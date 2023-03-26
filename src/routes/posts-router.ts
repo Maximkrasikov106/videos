@@ -13,6 +13,7 @@ import {inputValidationMiddleware} from "../midlewares/input-validation-middlewa
 
 import {noIdPost, noIdPosts, vievQueryP} from "../function/MappingId";
 import {postsService} from "../domain/posts-service";
+import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 
  export async function foundedBlog(id: string) {
 
@@ -45,10 +46,10 @@ postsRouter.get('/', async (req, res) => {
 
 
     let posts: PostType[] | null = await postsService.getPosts(sortBy, limit, pageNum, sortDirection)
-
+    let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'posts')
     // @ts-ignore
     let item = noIdPost(posts)
-    res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection, 'posts'))
+    res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection, count))
 })
 
 

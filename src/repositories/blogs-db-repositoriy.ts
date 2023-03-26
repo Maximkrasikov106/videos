@@ -9,11 +9,21 @@ export const createSortObj = (sortKey: string, sortDirection: string) => {
 
 
 export const blogsRepositoriy = {
+    
+        async getCount(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string, x: string) {
+
+            let [number, size] = [+pageNum - 1, +limit]
+            const skipElemCount = number * size
+            return  client.db("soc").collection(x).find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).count()
+
+
+        }
+    ,
     async getBlogs(sortBy: string, limit: string | number, pageNum: string | number, sortDirection: string) {
 
         let [number, size] = [+pageNum - 1, +limit]
         const skipElemCount = number * size
-
+        let totalCount = client.db("soc").collection<BlogsType>("blogs").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).count()
 
         return await client.db("soc").collection<BlogsType>("blogs").find({}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
 

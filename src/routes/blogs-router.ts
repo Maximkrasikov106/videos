@@ -15,6 +15,7 @@ import {
     ShortDescriptionPostValidate,
     titlePostValidate
 } from "../validators/validators-posts";
+import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
 export const blogsRouter = Router({})
 
 
@@ -31,9 +32,9 @@ blogsRouter.get('/', async (req: Request, res: Response)=> {
     let blogs : BlogsType[] | undefined = await blogsService.getBlogs( sortBy, limit, pageNum, sortDirection)
     // @ts-ignore
     let item  = noIdBlog(blogs)
-
+    let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'blogs')
     res.status(200).send( vievQueryP(item, sortBy,
-        limit, pageNum, sortDirection, 12) );
+        limit, pageNum, sortDirection, count) );
 });
 
 
@@ -104,7 +105,8 @@ blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
         return
     }
     let items = noIdPosts(BlogPosts)
-    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, 12))
+    let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'posts')
+    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, count))
     });
 
 blogsRouter.post('/:blogId/posts',
