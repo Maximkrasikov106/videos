@@ -106,7 +106,7 @@ blogsRouter.get('/:blogId/posts', async (req: Request, res:Response) => {
     }
     let items = noIdPosts(BlogPosts)
     let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'posts')
-    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, count))
+    res.status(200).send( vievQueryP(items, sortBy, limit, pageNum, sortDirection, count - 1))
     });
 
 blogsRouter.post('/:blogId/posts',

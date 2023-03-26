@@ -68,7 +68,6 @@ export  function vievQueryP(items: any, sortBy: string, limit: string | number,
 
 
 
-    console.log(items.length)
 
 
     return  {
