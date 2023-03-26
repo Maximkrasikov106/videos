@@ -16,7 +16,7 @@ export const blogsRepositoriy = {
             const skipElemCount = number * size
 
 
-            let x1 =  await client.db("soc").collection(x).find(SearchNameTerm ? {name: {$regex: SearchNameTerm}} : {}).sort(createSortObj(sortBy, sortDirection)).count()
+            let x1 =  await client.db("soc").collection(x).find(SearchNameTerm ? {name: {$regex: `${SearchNameTerm}`}} : {}).sort(createSortObj(sortBy, sortDirection)).count()
             console.log(x1, 5)
             return x1
 
@@ -27,7 +27,7 @@ export const blogsRepositoriy = {
         let [number, size] = [+pageNum - 1, +limit]
         const skipElemCount = number * size
 
-        return await client.db("soc").collection<BlogsType>("blogs").find({name: {$regex: SearchNameTerm}}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
+        return await client.db("soc").collection<BlogsType>("blogs").find({name: {$regex: `${SearchNameTerm}`}}).sort(createSortObj(sortBy, sortDirection)).skip(skipElemCount).limit(size).toArray()
 
     },
    async getBlogById(id: string): Promise<BlogsType | null> {
