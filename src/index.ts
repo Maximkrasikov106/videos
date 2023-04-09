@@ -6,6 +6,7 @@ import {blogsRouter} from "./routes/blogs-router";
 import {postsRouter} from "./routes/posts-router";
 import dotenv from 'dotenv'
 import {runDb} from "./DB";
+import {usersRouter} from "./routes/users-router";
 
 dotenv.config()
 
@@ -23,6 +24,7 @@ app.use('/testing', testingRouter)
 app.use('/videos', videosRouter)
 app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
+app.use('/users', usersRouter)
 
 
 const startApp = async () => {

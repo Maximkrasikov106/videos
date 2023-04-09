@@ -31,3 +31,10 @@ export type viewPostModel = {
     createdAt: string | Date ,
     isMembership: boolean
 }
+
+export type usersType = {
+    id: string,
+    login: string,
+    email: string,
+    createdAt: string | Date
+}

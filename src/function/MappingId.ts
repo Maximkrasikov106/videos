@@ -78,3 +78,13 @@ export  function vievQueryP(items: any, sortBy: string, limit: string | number,
         items: items
     }
 }
+
+export function viewUsers(getUsers: any) {
+    return {
+        id: getUsers.id,
+        login: getUsers.login,
+        email:  getUsers.email,
+        createdAt: getUsers.createdAt
+    }
+
+}

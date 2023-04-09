@@ -1,4 +1,6 @@
-import {MongoClient} from 'mongodb'
+import {Filter, MongoClient} from 'mongodb'
+import {blogsRepositoriy, createSortObj} from "./repositories/blogs-db-repositoriy";
+import {usersType} from "./types";
 
 const mongoURI = 'mongodb+srv://admin:admin@cluster0.qaoo8bj.mongodb.net/?retryWrites=true&w=majority'
 
@@ -95,4 +97,10 @@ export type TypesVid = {
     createdAt: string ,
     publicationDate: string,
     availableResolutions:string[]
+}
+
+export function getUsersCollection(filter: Filter<usersType>, sortBy: string, sortDirection: string) {
+
+    return  client.db("soc").collection<usersType>('users').find(filter).sort(createSortObj(sortBy, sortDirection)).count()
+
 }
