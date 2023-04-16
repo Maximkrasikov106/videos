@@ -23,7 +23,7 @@ export const queryUsersRepositoriy = {
         return {
             pagesCount: pageCount,
             page: +pageNum,
-            pageSize: pageSize,
+            pageSize: +pageSize,
             totalCount: totalCount,
             items: mappedUsers
         }
