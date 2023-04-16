@@ -1,4 +1,3 @@
-import {BlogsType, client} from "../DB";
 import {viewBlogModel, viewPostModel} from "../types";
 
 
@@ -80,11 +79,13 @@ export  function vievQueryP(items: any, sortBy: string, limit: string | number,
 }
 
 export function viewUsers(getUsers: any) {
-    return {
-        id: getUsers.id,
-        login: getUsers.login,
-        email:  getUsers.email,
-        createdAt: getUsers.createdAt
-    }
+    return getUsers.map((user: any) => {
+        return {
+            id: user._id,
+            login: user.login,
+            email: user.email,
+            createdAt: user.createdAt
+        }
+    })
 
 }

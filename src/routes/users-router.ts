@@ -11,7 +11,7 @@ export const usersRouter = Router({})
 
 usersRouter.get('/', async (req:Request, res: Response) => {
     let {pageSize, sortBy, pageNum, sortDirection, searchLoginTerm, searchEmailTerm} = getPaginationValues(req.query)
-
+    console.log(pageSize)
     let users : any = await queryUsersRepositoriy.getUsers(pageSize, sortBy, pageNum, sortDirection, searchLoginTerm, searchEmailTerm)
     res.send(users).status(200)
 });

@@ -12,13 +12,14 @@ export const queryUsersRepositoriy = {
         };
         const totalCount : number = await getUsersCollection(filter, sortBy, sortDirection)
 
-        const pageCount = Math.ceil(totalCount / pageSize)
-        const getUsers  = client.db("soc").collection<usersType>('users').find(filter).sort({[sortBy]: sortDirection === 'asc' ? 1 : -1})
+        const pageCount = Math.ceil(totalCount / +pageSize)
+        const getUsers  = await client.db("soc").collection<usersType>('users').find(filter).sort({[sortBy]: sortDirection === 'asc' ? 1 : -1})
             .skip(skipSize)
-            .limit(pageSize)
+            .limit(+pageSize)
             .toArray()
 
-        const mappedUsers = viewUsers(getUsers)
+        const mappedUsers =  viewUsers(getUsers)
+
         return {
             pagesCount: pageCount,
             page: +pageNum,
