@@ -5,8 +5,9 @@ export const testingRouter = Router({})
 
 
 
-testingRouter.delete('/all-data', (req, res)=> {
-     client.db("soc").collection("blogs").deleteMany({})
-     client.db("soc").collection("posts").deleteMany({})
+testingRouter.delete('/all-data', async (req, res)=> {
+    await  client.db("soc").collection("blogs").deleteMany({})
+    await client.db("soc").collection("posts").deleteMany({})
+    await client.db("soc").collection("users").deleteMany({})
     res.sendStatus(204)
 });
