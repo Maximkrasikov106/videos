@@ -35,6 +35,19 @@ export type viewPostModel = {
 export type usersType = {
     id: string,
     login: string,
+    password :string ,
+    passwordSalt: string,
+    passwordHash?: string,
+    email: string,
+    createdAt: string | Date
+}
+
+
+export type userDbType = {
+    id: string,
+    login: string,
+    passwordSalt: string,
+    passwordHash: string,
     email: string,
     createdAt: string | Date
 }

@@ -3,6 +3,13 @@ import {usersType} from "../types";
 import { ObjectId } from 'bson';
 import {usersService} from "../domain/users-service";
 export const usersRepository = {
+    async findByLoginOrEmail(loginOrEmail: string) {
+
+        let user: usersType | null = await client.db("soc")
+            .collection<usersType>("users").findOne({ $or : [{'login': loginOrEmail}, {'email': loginOrEmail}]})
+        console.log(user);
+        return user
+    },
     async getUsers() {
         let user :usersType[] = await client.db("soc")
             .collection<usersType>("users").find({}).toArray();

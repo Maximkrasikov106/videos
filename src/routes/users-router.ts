@@ -21,6 +21,7 @@ usersRouter.get('/', async (req:Request, res: Response) => {
 
 
 usersRouter.post('/', authMiddleware,loginValidate, passwordValidate, emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+    // @ts-ignore
     let users: usersType | null  = await usersService.addUser(req.body)
     console.log(users)
     if (users){
