@@ -21,11 +21,16 @@ usersRouter.get('/', async (req:Request, res: Response) => {
 
 usersRouter.post('/', loginValidate, passwordValidate, emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
     let users: usersType | null  = await usersService.addUser(req.body)
+    if (users){
         res.status(201).send(users)
+    }else {
+        res.status(401)
+    }
+
 
 });
 
-usersRouter.delete('/', async (req:Request, res: Response) => {
+usersRouter.delete('/:id', async (req:Request, res: Response) => {
     let users = await usersService.deleteUser(req.body.id)
-    res.status(201).send(users)
+    res.sendStatus(204)
 });
