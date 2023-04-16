@@ -20,13 +20,13 @@ usersRouter.get('/', async (req:Request, res: Response) => {
 });
 
 
-usersRouter.post('/', loginValidate, passwordValidate, emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+usersRouter.post('/', authMiddleware,loginValidate, passwordValidate, emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
     let users: usersType | null  = await usersService.addUser(req.body)
     console.log(users)
     if (users){
         res.status(201).send(users)
     }else {
-        res.status(401)
+        res.status(400)
     }
 
 
