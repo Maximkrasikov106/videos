@@ -22,6 +22,7 @@ usersRouter.get('/', async (req:Request, res: Response) => {
 
 usersRouter.post('/', loginValidate, passwordValidate, emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
     let users: usersType | null  = await usersService.addUser(req.body)
+    console.log(users)
     if (users){
         res.status(201).send(users)
     }else {
@@ -35,6 +36,8 @@ usersRouter.delete('/:id',authMiddleware, async (req:Request, res: Response) => 
     let users = await usersService.deleteUser(req.params.id)
     if (users){
         res.sendStatus(204)
+    }else {
+        res.sendStatus(404)
     }
-    res.sendStatus(404)
+
 });

@@ -16,7 +16,7 @@ export const inputValidationMiddleware = (req: Request, res:Response, next: Next
 
     if(!myValidationResult.isEmpty()) {
 
-        res.status(400).send({errorsMessages: myValidationResult.array({onlyFirstError: true}) })
+        res.status(401).send({errorsMessages: myValidationResult.array({onlyFirstError: true}) })
     }else{
         next()
     }
