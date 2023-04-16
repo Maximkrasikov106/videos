@@ -1,6 +1,7 @@
 import {client} from "../DB";
 import {usersType} from "../types";
-
+import { ObjectId } from 'bson';
+import {usersService} from "../domain/users-service";
 export const usersRepository = {
     async getUsers() {
         let user :usersType[] = await client.db("soc")
@@ -11,9 +12,14 @@ export const usersRepository = {
         let add = await client.db("soc").collection<usersType>("users").insertOne(user);
             return user
     },
-    async deleteUser (id: string) {
-        let deletedUser = await client.db("soc").collection("users")
-            .deleteOne({id: id});
+    async deleteUser (id: string ) {
+        let ObjectId = require('mongodb').ObjectId;
+        let o_id = new ObjectId(id);
+
+
+        let deletedUser = await client.db("soc").collection<usersType>("users")
+            .deleteOne({"_id": o_id });
+        console.log(deletedUser)
         return deletedUser.deletedCount > 0
 
     }

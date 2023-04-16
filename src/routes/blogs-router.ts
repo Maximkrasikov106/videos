@@ -65,7 +65,7 @@ blogsRouter.post('/',  authMiddleware,nameValidation,descriptionValidate,website
 })
 
 
-blogsRouter.delete('/:id', authMiddleware, async (req, res: Response)=> {
+blogsRouter.delete('/:id', authMiddleware, async (req:Request, res: Response)=> {
    let foundBlogs = await blogsService.deleteBlog(req.params.id)
     if (foundBlogs){
         res.sendStatus(204)

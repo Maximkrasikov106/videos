@@ -6,6 +6,7 @@ import {getPaginationValues} from "../utils/pagination/pagination";
 import {queryUsersRepositoriy} from "../query-repositoryi/query-users-repositoriy";
 import {emailValidate, loginValidate, passwordValidate} from "../validators/validators-users";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
+import {authMiddleware} from "../midlewares/auth-middleware";
 
 
 export const usersRouter = Router({})
@@ -30,7 +31,10 @@ usersRouter.post('/', loginValidate, passwordValidate, emailValidate,inputValida
 
 });
 
-usersRouter.delete('/:id', async (req:Request, res: Response) => {
-    let users = await usersService.deleteUser(req.body.id)
-    res.sendStatus(204)
+usersRouter.delete('/:id',authMiddleware, async (req:Request, res: Response) => {
+    let users = await usersService.deleteUser(req.params.id)
+    if (users){
+        res.sendStatus(204)
+    }
+    res.sendStatus(404)
 });
