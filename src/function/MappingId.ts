@@ -89,3 +89,12 @@ export function viewUsers(getUsers: any) {
     })
 
 }
+
+export function viewUser(getUser: any) {
+        return {
+            id: getUser._id,
+            login: getUser.login,
+            email: getUser.email,
+            createdAt: getUser.createdAt
+        }
+}
