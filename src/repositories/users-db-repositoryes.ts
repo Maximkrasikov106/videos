@@ -13,15 +13,15 @@ export const usersRepository = {
             return user
     },
     async deleteUser (id: string ) {
+        if (ObjectId.isValid(id)){
+            let o_id = new ObjectId(id);
+            let deletedUser = await client.db("soc").collection<usersType>("users")
+                .deleteOne({_id: o_id });
+            console.log(deletedUser)
+            return deletedUser.deletedCount > 0
 
-        let o_id = new ObjectId(id);
-
-
-        let deletedUser = await client.db("soc").collection<usersType>("users")
-            .deleteOne({_id: o_id });
-        console.log(deletedUser)
-        return deletedUser.deletedCount > 0
-
-    }
-
+        }else {
+            return false;
+        }
+        }
 }
