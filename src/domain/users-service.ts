@@ -35,9 +35,15 @@ export const usersService = {
     },
     async checkLog(loginOrEmail : string, password : string) {
         const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
-        if(!user) return false
+        if(!user ) return false
+
         const passwordHash = await this._generateHash(password, user.passwordSalt)
-        return user;
+        if (passwordHash == user.passwordHash){
+            return user;
+        }else {
+            return false;
+        }
+
     },
     async getUserIdByToken(userId: any) {
 

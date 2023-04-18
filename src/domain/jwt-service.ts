@@ -6,8 +6,9 @@ import {ObjectId} from "bson";
 export const jwtService ={
     async createJwt(user: any) {
         const token = jwt.sign({userId: user._id}, setting.JWT_SECRET, {expiresIn: '1h'})
+
         return {
-            token: token
+            accessToken: token
         }
     },
     async getUserByIdToken(token: string) {
