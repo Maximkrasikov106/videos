@@ -1,4 +1,4 @@
-import {viewBlogModel, viewPostModel} from "../types";
+import {usersType, viewBlogModel, viewPostModel} from "../types";
 
 
 export function noIdBlog(array: Array<viewBlogModel> ) {
@@ -97,4 +97,13 @@ export function viewUser(getUser: any) {
             email: getUser.email,
             createdAt: getUser.createdAt
         }
+}
+export function vievUserModel(user: any) {
+
+    return {
+        email: user.email,
+        login: user.login,
+        userId: user._id.toString()
+    };
+
 }

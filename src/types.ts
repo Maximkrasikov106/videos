@@ -42,6 +42,17 @@ export type usersType = {
     createdAt: string | Date
 }
 
+export type usersMeType = {
+    id: string,
+    login: string,
+    password :string ,
+    passwordSalt: string,
+    passwordHash?: string,
+    email: string,
+    createdAt: string | Date,
+    _id: string
+}
+
 
 export type userDbType = {
     id: string,
@@ -50,4 +61,12 @@ export type userDbType = {
     passwordHash: string,
     email: string,
     createdAt: string | Date
+}
+
+declare global {
+     namespace Express {
+        export interface Request {
+            user: usersType | null
+        }
+    }
 }

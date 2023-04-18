@@ -1,7 +1,7 @@
 import {usersRepository} from "../repositories/users-db-repositoryes";
 import {userDbType, usersType} from "../types";
 import {getPaginationValues} from "../utils/pagination/pagination";
-import {viewUser} from "../function/MappingId";
+import {vievUserModel, viewUser,} from "../function/MappingId";
 import bcrypt from 'bcrypt'
 export const usersService = {
     async getUsers(query: any) {
@@ -34,11 +34,15 @@ export const usersService = {
         return hash
     },
     async checkLog(loginOrEmail : string, password : string) {
-        console.log(loginOrEmail)
         const user = await usersRepository.findByLoginOrEmail(loginOrEmail)
         if(!user) return false
         const passwordHash = await this._generateHash(password, user.passwordSalt)
-        return user.passwordHash === passwordHash;
+        return user;
+    },
+    async getUserIdByToken(userId: any) {
+
+        let user = await usersRepository.getUser(userId);
+        return user
 
 
     }

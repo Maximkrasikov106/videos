@@ -80,7 +80,6 @@ postsRouter.post('/',
              req.body.content,
             req.body.blogId,
              )
-
         if(newPost){
             res.status(201).send(newPost ? noIdPost(newPost) : null)
         }else {
