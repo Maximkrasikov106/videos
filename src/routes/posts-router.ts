@@ -138,10 +138,16 @@ postsRouter.get('/:id/comments', async (req, res) => {
 
 postsRouter.post('/:id/comments', authMiddlewareJWT,validatorsComment,inputValidationMiddleware,
     async (req: Request, res:Response) => {
-        // @ts-ignore
-        let newComment = await commentService.addNewComment(req.params.id, req.body.content, req.user!._id)
-        console.log(newComment)
+        let post : PostType | null = await postsService.getPostById(req.params.id)
+        if (post) {
 
-        if (!newComment) return res.sendStatus(404);
-        res.status(201).send(viewComment(newComment))
+            // @ts-ignore
+            let newComment = await commentService.addNewComment(req.params.id, req.body.content, req.user!._id)
+            console.log(newComment)
+
+            if (!newComment) return res.sendStatus(404);
+            res.status(201).send(viewComment(newComment))
+        }else {
+            res.sendStatus(404)
+        }
     });
