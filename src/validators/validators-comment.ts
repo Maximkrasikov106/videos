@@ -2,7 +2,7 @@ import {body, param} from "express-validator";
 import {BlogsType, client, db} from "../DB";
 import {ObjectId} from "bson";
 
-export const validatorsComment = body('content', ).isLength({
+export const validatorsComment = body('content', ).trim().isLength({
     min: 20,
     max: 300
 }).withMessage('content')
