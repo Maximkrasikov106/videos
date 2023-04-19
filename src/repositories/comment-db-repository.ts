@@ -1,4 +1,4 @@
-import {db} from "../DB";
+import {BlogsType, client, db} from "../DB";
 import {usersType} from "../types";
 import {ObjectId} from "bson";
 
@@ -26,6 +26,14 @@ export const commentRepository = {
             let o_id = new ObjectId(id)
             let deleteComment = await db.collection('comments').deleteOne({_id: o_id})
             return deleteComment.deletedCount > 0
+        }
+    },
+    async updateComment(id:string, content: string) {
+        if (ObjectId.isValid(id)) {
+            let o_id = new ObjectId(id)
+            let update = await db.collection("comments").updateOne({_id: o_id},
+                {$set: {content: content}})
+            return update.modifiedCount;
         }
     }
 }

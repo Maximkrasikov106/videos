@@ -24,6 +24,9 @@ export const commentService = {
     },
     async deleteComment(id: string) {
         return commentRepository.deleteComments(id)
+    },
+    async updateComment(id: string, content: string) {
+        return commentRepository.updateComment(id, content)
     }
 
 }

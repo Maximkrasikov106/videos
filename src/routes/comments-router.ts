@@ -2,6 +2,8 @@ import {Request, Response, Router} from "express";
 import {commentService} from "../domain/comment-service";
 import {viewComment} from "../function/MappingId";
 import {authMiddlewareJWT} from "../midlewares/auth-middleware-JWT";
+import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
+import {validatorsComment} from "../validators/validators-comment";
 
 
 export const commentsRouter = Router({})
@@ -37,6 +39,28 @@ commentsRouter.delete('/:id', authMiddlewareJWT, async (req: Request, res: Respo
             res.sendStatus(403)
             return
             }
+    }else {
+        res.sendStatus(404)
+        return
+    }
+})
+
+commentsRouter.put('/:id', authMiddlewareJWT, validatorsComment,inputValidationMiddleware,async (req: Request, res:Response) => {
+    let findComment = await commentService.findComents(req.params.id)
+    if (findComment) {
+        // @ts-ignore
+        if (findComment.commentatorInfo.userId === req.user!._id.toString()){
+            let updateComment = await commentService.updateComment(req.params.id, req.body.content)
+            if (updateComment) {
+                res.sendStatus(204)
+            }else {
+                res.sendStatus(404)
+                return
+            }
+        }else {
+            res.sendStatus(403)
+            return
+        }
     }else {
         res.sendStatus(404)
         return
