@@ -124,7 +124,7 @@ export function vievUserModelForComments(user: any) {
 
     return {
 
-        login: user.login,
+        userLogin: user.login,
         userId: user._id.toString()
     };
 
