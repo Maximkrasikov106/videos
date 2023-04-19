@@ -19,15 +19,26 @@ commentsRouter.get('/:id', async (req: Request, res: Response) => {
 
 commentsRouter.delete('/:id', authMiddlewareJWT, async (req: Request, res: Response) => {
     let findComment = await commentService.findComents(req.params.id)
-    // @ts-ignore
-    if (findComment.commentatorInfo.userId === req.user!._id.toString() ){
-        let comments = await commentService.deleteComment(req.params.id)
-        if (comments){
-            res.status(204)
+    console.log(findComment, 'lol')
+
+    if (findComment){
+        // @ts-ignore
+        if (findComment.commentatorInfo.userId === req.user!._id.toString() ){
+
+            let comments = await commentService.deleteComment(req.params.id)
+            if (comments){
+                res.sendStatus(204)
+                return
+            }else {
+                res.sendStatus(404)
+                return
+            }
         }else {
-            res.sendStatus(404)
-        }
+            res.sendStatus(403)
+            return
+            }
     }else {
-        res.sendStatus(403)
+        res.sendStatus(404)
+        return
     }
 })

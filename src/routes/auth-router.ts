@@ -9,9 +9,11 @@ export const authRouter = Router({})
 authRouter.post('/login', async (req: Request,res: Response) => {
 
     const user = await usersService.checkLog(req.body.loginOrEmail, req.body.password)
+    console.log(user)
     if (user){
-
+        console.log(user, 'wtf');
         const token = await jwtService.createJwt(user)
+
         res.status(200).send(token)
 
     }else {
@@ -26,6 +28,7 @@ authRouter.get('/me', authMiddlewareJWT, async (req: Request,res:Response) => {
 
     if (findUser){
         res.status(200).send(vievUserModel(findUser))
+        return
     }
     res.sendStatus(401)
 })

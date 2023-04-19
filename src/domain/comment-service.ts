@@ -4,6 +4,7 @@ import {vievUserModelForComments} from "../function/MappingId";
 
 export const commentService = {
     async addNewComment(postsId: string, content: string, userId: string ){
+
         let createDate: String | Date = new Date(Date.now())
         let userData: any = await usersRepository.getUser(userId);
         userData = vievUserModelForComments(userData)
@@ -16,7 +17,10 @@ export const commentService = {
 
     },
     async findComents(id: string) {
-        return commentRepository.findComments(id)
+
+        let com = await commentRepository.findComments(id)
+
+        return com
     },
     async deleteComment(id: string) {
         return commentRepository.deleteComments(id)
