@@ -11,9 +11,15 @@ import {
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 
 
-import {noIdPost, noIdPosts, vievQueryP} from "../function/MappingId";
+import {noIdPost, noIdPosts, vievQueryP, viewComment} from "../function/MappingId";
 import {postsService} from "../domain/posts-service";
 import {blogsRepositoriy} from "../repositories/blogs-db-repositoriy";
+import {blogsService} from "../domain/blog-service";
+import {commentService} from "../domain/comment-service";
+import {authMiddlewareJWT} from "../midlewares/auth-middleware-JWT";
+import {validatorsComment} from "../validators/validators-comment";
+import {queryPostsCommentsRepository} from "../query-repositoryi/query-postsComments-repository";
+import {getPaginationValues} from "../utils/pagination/pagination";
 
  export async function foundedBlog(id: string) {
 
@@ -49,8 +55,6 @@ postsRouter.get('/', async (req, res) => {
     let count: number = await blogsRepositoriy.getCount(sortBy, limit, pageNum, sortDirection, 'posts')
     // @ts-ignore
     let item = noIdPosts(posts)
-    console.log(item)
-    console.log(count, 666)
     res.status(200).send(vievQueryP(item, sortBy, limit, pageNum, sortDirection, count))
 })
 
@@ -119,3 +123,25 @@ postsRouter.delete('/:id', authMiddleware, async (req:RequestWithBodyAndQuery<Po
     }
 
 });
+
+postsRouter.get('/:id/comments', async (req, res) => {
+    let {pageSize, sortBy, pageNum, sortDirection} = getPaginationValues(req.query)
+    let allPostComments = await queryPostsCommentsRepository.getPostComments(pageSize, sortBy, pageNum, sortDirection, req.params.id)
+
+    if (allPostComments) {
+        res.status(200).send(allPostComments)
+    }else {
+        res.status(404)
+    }
+})
+
+
+postsRouter.post('/:id/comments', authMiddlewareJWT,validatorsComment,
+    async (req: Request, res:Response) => {
+        // @ts-ignore
+        let newComment = await commentService.addNewComment(req.params.id, req.body.content, req.user!._id)
+        console.log(newComment)
+
+        if (!newComment) return res.sendStatus(404);
+        res.status(201).send(viewComment(newComment))
+    });

@@ -104,3 +104,12 @@ export function getUsersCollection(filter: Filter<usersType>, sortBy: string, so
     return  client.db("soc").collection<usersType>('users').find(filter).sort(createSortObj(sortBy, sortDirection)).count()
 
 }
+
+export function getPostComments( sortBy: string, sortDirection: string, postId: string) {
+
+    return  client.db("soc").collection('comments').find({postId: postId}).sort(createSortObj(sortBy, sortDirection)).count()
+
+}
+
+
+export const db = client.db("soc")

@@ -90,6 +90,18 @@ export function viewUsers(getUsers: any) {
 
 }
 
+export function viewComments(getComments: any) {
+    return getComments.map((comments: any) => {
+        return {
+            id: comments._id,
+            content: comments.content,
+            commentatorInfo: comments.commentatorInfo,
+            createdAt: comments.createdAt
+        }
+    })
+
+}
+
 export function viewUser(getUser: any) {
         return {
             id: getUser._id,
@@ -106,4 +118,22 @@ export function vievUserModel(user: any) {
         userId: user._id.toString()
     };
 
+}
+
+export function vievUserModelForComments(user: any) {
+
+    return {
+
+        login: user.login,
+        userId: user._id.toString()
+    };
+
+}
+export function viewComment(comment: any) {
+    return {
+        id: comment._id,
+        content: comment.content,
+        commentatorInfo: comment.commentatorInfo,
+        createdAt: comment.createdAt
+    }
 }

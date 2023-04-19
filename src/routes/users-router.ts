@@ -7,6 +7,10 @@ import {queryUsersRepositoriy} from "../query-repositoryi/query-users-repositori
 import {emailValidate, loginValidate, passwordValidate} from "../validators/validators-users";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {authMiddleware} from "../midlewares/auth-middleware";
+import {contentPostValidate, ShortDescriptionPostValidate, titlePostValidate} from "../validators/validators-posts";
+import {blogsService} from "../domain/blog-service";
+import {noIdPost} from "../function/MappingId";
+import {blogsRouter} from "./blogs-router";
 
 
 export const usersRouter = Router({})
@@ -14,7 +18,6 @@ export const usersRouter = Router({})
 
 usersRouter.get('/', async (req:Request, res: Response) => {
     let {pageSize, sortBy, pageNum, sortDirection, searchLoginTerm, searchEmailTerm} = getPaginationValues(req.query)
-
     let users : any = await queryUsersRepositoriy.getUsers(pageSize, sortBy, pageNum, sortDirection, searchLoginTerm, searchEmailTerm)
     res.send(users).status(200)
 });
@@ -42,3 +45,5 @@ usersRouter.delete('/:id',authMiddleware, async (req:Request, res: Response) => 
     }
 
 });
+
+

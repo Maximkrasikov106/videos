@@ -8,6 +8,7 @@ import dotenv from 'dotenv'
 import {runDb} from "./DB";
 import {usersRouter} from "./routes/users-router";
 import {authRouter} from "./routes/auth-router";
+import {commentsRouter} from "./routes/comments-router";
 
 dotenv.config()
 
@@ -27,7 +28,7 @@ app.use('/blogs', blogsRouter)
 app.use('/posts', postsRouter)
 app.use('/users', usersRouter)
 app.use('/auth', authRouter)
-
+app.use('/comments', commentsRouter)
 const startApp = async () => {
     await runDb()
     app.listen(port, () => {

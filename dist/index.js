@@ -23,6 +23,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const DB_1 = require("./DB");
 const users_router_1 = require("./routes/users-router");
 const auth_router_1 = require("./routes/auth-router");
+const comments_router_1 = require("./routes/comments-router");
 dotenv_1.default.config();
 exports.app = (0, express_1.default)();
 const port = 3000;
@@ -34,6 +35,7 @@ exports.app.use('/blogs', blogs_router_1.blogsRouter);
 exports.app.use('/posts', posts_router_1.postsRouter);
 exports.app.use('/users', users_router_1.usersRouter);
 exports.app.use('/auth', auth_router_1.authRouter);
+exports.app.use('/comments', comments_router_1.commentsRouter);
 const startApp = () => __awaiter(void 0, void 0, void 0, function* () {
     yield (0, DB_1.runDb)();
     exports.app.listen(port, () => {

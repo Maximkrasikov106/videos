@@ -63,10 +63,3 @@ export type userDbType = {
     createdAt: string | Date
 }
 
-declare global {
-     namespace Express {
-        export interface Request {
-            user: usersType | null
-        }
-    }
-}
