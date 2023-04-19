@@ -128,7 +128,7 @@ postsRouter.get('/:id/comments', async (req, res) => {
     let {pageSize, sortBy, pageNum, sortDirection} = getPaginationValues(req.query)
     let allPostComments = await queryPostsCommentsRepository.getPostComments(pageSize, sortBy, pageNum, sortDirection, req.params.id)
 
-    if (allPostComments) {
+    if (allPostComments && allPostComments.items.length > 0) {
         res.status(200).send(allPostComments)
     }else {
         res.sendStatus(404)
