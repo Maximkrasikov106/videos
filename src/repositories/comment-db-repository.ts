@@ -1,5 +1,6 @@
 import {db} from "../DB";
 import {usersType} from "../types";
+import {ObjectId} from "bson";
 
 export const commentRepository = {
     async addNewComment(postId: string, content: string, userParams: any, createdAt: string | Date) {
@@ -8,11 +9,23 @@ export const commentRepository = {
                 postId: postId,
                 content: content,
                 commentatorInfo: userParams,
-                createdAt: createdAt  })
-        let newComment = await db.collection('comments').findOne({}, {sort: {_id: -1}, limit: 1 });
+                createdAt: createdAt
+            })
+        let newComment = await db.collection('comments').findOne({}, {sort: {_id: -1}, limit: 1});
         return newComment;
     },
-    async findComments() {
+    async findComments(id: string) {
+        if (ObjectId.isValid(id)) {
+            let o_id = new ObjectId(id);
+            return  await db.collection('comments').findOne({_id: o_id})
 
+        }
+    },
+    async deleteComments(id: string) {
+        if (ObjectId.isValid(id)) {
+            let o_id = new ObjectId(id)
+            let deleteComment = await db.collection('comments').deleteOne({_id: o_id})
+            return deleteComment.deletedCount > 0
+        }
     }
 }

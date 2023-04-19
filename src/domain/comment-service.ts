@@ -1,8 +1,6 @@
 import {commentRepository} from "../repositories/comment-db-repository";
 import {usersRepository} from "../repositories/users-db-repositoryes";
 import {vievUserModelForComments} from "../function/MappingId";
-import {setting} from "../setting";
-import {strict} from "assert";
 
 export const commentService = {
     async addNewComment(postsId: string, content: string, userId: string ){
@@ -17,7 +15,11 @@ export const commentService = {
         }
 
     },
-    async findAllcoments() {
-        return commentRepository.findComments()
+    async findComents(id: string) {
+        return commentRepository.findComments(id)
+    },
+    async deleteComment(id: string) {
+        return commentRepository.deleteComments(id)
     }
+
 }
