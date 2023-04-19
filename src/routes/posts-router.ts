@@ -131,7 +131,7 @@ postsRouter.get('/:id/comments', async (req, res) => {
     if (allPostComments) {
         res.status(200).send(allPostComments)
     }else {
-        res.status(404)
+        res.sendStatus(404)
     }
 })
 
