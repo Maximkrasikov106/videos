@@ -6,10 +6,6 @@ import bcrypt from 'bcrypt'
 export const usersService = {
     async getUsers(query: any) {
 
-
-        // let [number, size] = [+pageNum - 1, +pageSize]
-        // const skipElemCount = number * size
-
         return  await usersRepository.getUsers()
     },
     async addUser(req : usersType) {
