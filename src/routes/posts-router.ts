@@ -136,7 +136,7 @@ postsRouter.get('/:id/comments', async (req, res) => {
 })
 
 
-postsRouter.post('/:id/comments', authMiddlewareJWT,validatorsComment,
+postsRouter.post('/:id/comments', authMiddlewareJWT,validatorsComment,inputValidationMiddleware,
     async (req: Request, res:Response) => {
         // @ts-ignore
         let newComment = await commentService.addNewComment(req.params.id, req.body.content, req.user!._id)
