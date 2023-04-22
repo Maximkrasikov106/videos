@@ -16,11 +16,8 @@ export const contentPostValidate = body('content', ).isString().trim().isLength(
 }).withMessage('content')
 
 export const blogIdPostValidate = body('blogId', ).custom( async (value) => {
-    console.log(value)
     const blogs = await client.db("soc").collection<BlogsType>("blogs").findOne({id: value})
-    console.log(blogs)
     if (blogs == null) {
-
         throw new Error('blogId');
     }else {
         return true;
@@ -28,11 +25,8 @@ export const blogIdPostValidate = body('blogId', ).custom( async (value) => {
 }).withMessage('blogId')
 
 export const blogIdParamPostValidate = param('blogId', ).custom( async (value) => {
-
-    const blogs = await client.db("soc").collection<BlogsType>("blogs").findOne({id: value})
-
+    const blogs = await client.db("soc").collection("blogs").findOne({id: value})
     if (blogs == null) {
-
         throw new Error('blogId');
     }else {
         return true;

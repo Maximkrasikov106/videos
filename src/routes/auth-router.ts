@@ -3,6 +3,10 @@ import {usersService} from "../domain/users-service";
 import {authMiddlewareJWT} from "../midlewares/auth-middleware-JWT";
 import {jwtService} from "../domain/jwt-service";
 import {vievUserModel} from "../function/MappingId";
+import {registerService} from "../domain/register-service";
+import {emailValidate, loginValidate, passwordValidate} from "../validators/validators-users";
+import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
+import {codeValidate} from "../validators/validation-registration";
 export const authRouter = Router({})
 
 
@@ -31,4 +35,32 @@ authRouter.get('/me', authMiddlewareJWT, async (req: Request,res:Response) => {
         return
     }
     res.sendStatus(401)
+})
+
+authRouter.post('/registration', loginValidate, passwordValidate,emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+    let newUser = await registerService.createUser(req.body.login, req.body.password, req.body.email)
+    if (newUser) {
+        res.sendStatus(204)
+    }else {
+        res.sendStatus(404)
+    }
+})
+
+
+authRouter.post('/registration-confirmation', codeValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+    let userConfirm = await registerService.checkEmail(req.body.code)
+    if (userConfirm){
+        res.sendStatus(204)
+    }else {
+        res.sendStatus(400)
+    }
+})
+
+authRouter.post('/registration-email-resending', emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+    let userConfirm = await registerService.emailResending(req.body.email)
+    if (userConfirm){
+        res.sendStatus(204)
+    }else {
+        res.sendStatus(400)
+    }
 })
