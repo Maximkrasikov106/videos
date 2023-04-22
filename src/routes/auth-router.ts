@@ -6,7 +6,7 @@ import {vievUserModel} from "../function/MappingId";
 import {registerService} from "../domain/register-service";
 import {emailValidate, loginValidate, passwordValidate} from "../validators/validators-users";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
-import {codeValidate} from "../validators/validation-registration";
+import {codeValidate, emailExictValidate, loginExictValidate} from "../validators/validation-registration";
 export const authRouter = Router({})
 
 
@@ -37,7 +37,7 @@ authRouter.get('/me', authMiddlewareJWT, async (req: Request,res:Response) => {
     res.sendStatus(401)
 })
 
-authRouter.post('/registration', loginValidate, passwordValidate,emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+authRouter.post('/registration', loginValidate,emailExictValidate,loginExictValidate ,passwordValidate,emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
     let newUser = await registerService.createUser(req.body.login, req.body.password, req.body.email)
     if (newUser) {
         res.sendStatus(204)
