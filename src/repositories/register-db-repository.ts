@@ -5,7 +5,7 @@ export const registerDbRepository = {
         return await db.collection('users').insertOne(user)
     },
     async updateCode(code: string) {
-        return await db.collection('users').updateOne({"emailConfirmation.confirmationCode": code },{isComposing: true})
+        return await db.collection('users').updateOne({"emailConfirmation.confirmationCode": code },{ $set: { "isComposing": true}})
     },
     async findUserForEmail(email:string) {
         return await db.collection('users').findOne({"accountData.email": email})

@@ -5,7 +5,7 @@ import {client, db} from "../DB";
 export const codeValidate = body('code', ).custom( async (code) => {
     const codeUser = await db.collection("users").findOne({"emailConfirmation.confirmationCode": code})
     if (codeUser == null) {
-        return false
+        throw new Error('code');
     }
     if (codeUser == code) return true
 }).withMessage('code')

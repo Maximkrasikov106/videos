@@ -7,6 +7,7 @@ import {registerService} from "../domain/register-service";
 import {emailValidate, loginValidate, passwordValidate} from "../validators/validators-users";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
 import {codeValidate, emailExictValidate, loginExictValidate} from "../validators/validation-registration";
+import {db} from "../DB";
 export const authRouter = Router({})
 
 
@@ -63,4 +64,11 @@ authRouter.post('/registration-email-resending', emailValidate,inputValidationMi
     }else {
         res.sendStatus(400)
     }
+})
+
+
+authRouter.get('/auth/user', async (req,res) => {
+    let code = "50c9c959-3baa-43ba-babc-e652ed3e574f"
+    let users = await db.collection('users').find({"emailConfirmation.confirmationCode": code }).toArray()
+    res.send(users).status(200)
 })

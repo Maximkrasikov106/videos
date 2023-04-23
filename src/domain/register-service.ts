@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import {ObjectId} from "bson";
-import uuidv4 from "uuidv4"
+import { v4 as uuidv4 } from 'uuid';
 import add from "date-fns/add"
 import {registerDbRepository} from "../repositories/register-db-repository";
 import {emailManger} from "../managers/emailManger";
@@ -18,7 +18,7 @@ export const registerService = {
                 createdAt: new Date(),
             },
             emailConfirmation: {
-                confirmationCode: uuidv4,
+                confirmationCode: uuidv4(),
                 expirationDate: add(new Date(), {
                     hours: 1,
                     minutes: 3
