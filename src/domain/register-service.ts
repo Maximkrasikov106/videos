@@ -36,7 +36,11 @@ export const registerService = {
         return hash
     },
     async checkEmail(code: string) {
-        return await registerDbRepository.updateCode(code)
+        let updateCode =  await registerDbRepository.updateCode(code)
+        let user = await registerDbRepository.userByCode(code);
+        // @ts-ignore
+        await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode )
+        return updateCode
     },
     async emailResending(email: string) {
        let user = await  registerDbRepository.findUserForEmail(email)

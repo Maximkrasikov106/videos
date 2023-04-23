@@ -4,15 +4,13 @@ import {client, db} from "../DB";
 
 export const codeValidate = body('code', ).custom( async (code) => {
     const codeUser = await db.collection("users").findOne({"emailConfirmation.confirmationCode": code})
-    if (codeUser == null) {
+    if (codeUser == null || codeUser.isComposing == true) {
         throw new Error('code');
     }
     if (codeUser == code) return true
 }).withMessage('code')
 
 export const emailExictValidate = body('email', ).custom( async (email) => {
-
-
     const emailExict = await db.collection("users").findOne({"accountData.email": email})
     console.log(emailExict)
     if (emailExict) throw new Error('blogId');
