@@ -10,13 +10,12 @@ export const registerService = {
         const passwordHash = await this._generateHash(password, passwordSalt)
         let user = {
             _id: new ObjectId(),
-            accountData: {
                 login: login,
                 passwordHash,
                 passwordSalt,
                 email,
                 createdAt: new Date(),
-            },
+
             emailConfirmation: {
                 confirmationCode: uuidv4(),
                 expirationDate: add(new Date(), {
@@ -28,7 +27,7 @@ export const registerService = {
 
         }
         const createResult = await registerDbRepository.saveUser(user)
-        await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode )
+        await emailManger.sendEmailConfirmMessager(user.email, user.emailConfirmation.confirmationCode )
         return createResult
     },
     async _generateHash(password: string, salt: string) {
@@ -39,7 +38,7 @@ export const registerService = {
         let updateCode =  await registerDbRepository.updateByCode(code)
         let user = await registerDbRepository.userByCode(code);
         if (!user) return false
-        await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode )
+        await emailManger.sendEmailConfirmMessager(user.email, user.emailConfirmation.confirmationCode )
         return updateCode
     },
     async emailResending(email: string) {
@@ -52,7 +51,7 @@ export const registerService = {
         console.log(updatedUser)
         let newUser = await registerDbRepository.findUserForEmail(email)
         if (!newUser) return false
-        let kk =  await emailManger.sendEmailConfirmMessager(newUser.accountData.email, newUser.emailConfirmation.confirmationCode)
+        let kk =  await emailManger.sendEmailConfirmMessager(newUser.email, newUser.emailConfirmation.confirmationCode)
         console.log(kk)
         return user
     }
