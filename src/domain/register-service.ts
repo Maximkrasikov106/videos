@@ -46,9 +46,13 @@ export const registerService = {
        let user = await  registerDbRepository.findUserForEmail(email)
         if (!user) return false
         let newCode = await uuidv4()
+        console.log(newCode)
+        console.log(email)
         let updatedUser = await registerDbRepository.updateCode(email ,newCode);
         console.log(updatedUser)
-        await emailManger.sendEmailConfirmMessager(email, newCode)
+
+        let kk =  await emailManger.sendEmailConfirmMessager(email, newCode)
+        console.log(kk)
         return user
     }
 }
