@@ -11,6 +11,6 @@ export const registerDbRepository = {
         return await db.collection('users').findOne({"accountData.email": email})
     },
     async userByCode(code: string) {
-       return   await db.collection('users').find({"emailConfirmation.confirmationCode": code }).toArray()
+       return   await db.collection('users').findOne({"emailConfirmation.confirmationCode": code })
     }
 }

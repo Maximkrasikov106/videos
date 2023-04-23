@@ -69,6 +69,6 @@ authRouter.post('/registration-email-resending', emailValidate,inputValidationMi
 
 authRouter.get('/auth/user', async (req,res) => {
     let code = "50c9c959-3baa-43ba-babc-e652ed3e574f"
-    let users = await db.collection('users').find({"emailConfirmation.confirmationCode": code }).toArray()
+    let users = await db.collection('users').find().toArray()
     res.send(users).status(200)
 })

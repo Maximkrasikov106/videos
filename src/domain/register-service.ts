@@ -38,7 +38,7 @@ export const registerService = {
     async checkEmail(code: string) {
         let updateCode =  await registerDbRepository.updateCode(code)
         let user = await registerDbRepository.userByCode(code);
-        // @ts-ignore
+        if (!user) return false
         await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode )
         return updateCode
     },
