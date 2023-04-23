@@ -36,7 +36,7 @@ export const registerService = {
         return hash
     },
     async checkEmail(code: string) {
-        let updateCode =  await registerDbRepository.updateCode(code)
+        let updateCode =  await registerDbRepository.updateByCode(code)
         let user = await registerDbRepository.userByCode(code);
         if (!user) return false
         await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode )
@@ -45,8 +45,9 @@ export const registerService = {
     async emailResending(email: string) {
        let user = await  registerDbRepository.findUserForEmail(email)
         if (!user) return false
-
-        await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode)
+        let newCode = uuidv4()
+        await registerDbRepository.updateCode(email ,newCode);
+        await emailManger.sendEmailConfirmMessager(email, newCode)
         return user
     }
 }
