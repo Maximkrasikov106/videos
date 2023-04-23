@@ -25,4 +25,5 @@ export const loginExictValidate = body('login', ).custom( async (login) => {
 export const emailValidateReg = body('email', ).custom( async (email) => {
     const emailValid = await db.collection("users").findOne({"accountData.email": email})
     if (!emailValid)  throw new Error('email');
+    if (emailValid.isComposing == true) throw new Error('email');
 }).withMessage('login')
