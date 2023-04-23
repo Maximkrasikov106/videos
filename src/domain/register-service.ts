@@ -50,8 +50,9 @@ export const registerService = {
         console.log(email)
         let updatedUser = await registerDbRepository.updateCode(email ,newCode);
         console.log(updatedUser)
-
-        let kk =  await emailManger.sendEmailConfirmMessager(email, newCode)
+        let newUser = await registerDbRepository.findUserForEmail(email)
+        if (!newUser) return false
+        let kk =  await emailManger.sendEmailConfirmMessager(newUser.accountData.email, newUser.emailConfirmation.confirmationCode)
         console.log(kk)
         return user
     }
