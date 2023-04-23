@@ -6,7 +6,12 @@ import {vievUserModel} from "../function/MappingId";
 import {registerService} from "../domain/register-service";
 import {emailValidate, loginValidate, passwordValidate} from "../validators/validators-users";
 import {inputValidationMiddleware} from "../midlewares/input-validation-middleware";
-import {codeValidate, emailExictValidate, loginExictValidate} from "../validators/validation-registration";
+import {
+    codeValidate,
+    emailExictValidate,
+    emailValidateReg,
+    loginExictValidate
+} from "../validators/validation-registration";
 import {db} from "../DB";
 export const authRouter = Router({})
 
@@ -57,7 +62,7 @@ authRouter.post('/registration-confirmation', codeValidate,inputValidationMiddle
     }
 })
 
-authRouter.post('/registration-email-resending', emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
+authRouter.post('/registration-email-resending', emailValidateReg,emailValidate,inputValidationMiddleware, async (req:Request, res: Response) => {
     let userConfirm = await registerService.emailResending(req.body.email)
     if (userConfirm){
         res.sendStatus(204)

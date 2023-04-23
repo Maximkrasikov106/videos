@@ -13,12 +13,16 @@ export const codeValidate = body('code', ).custom( async (code) => {
 export const emailExictValidate = body('email', ).custom( async (email) => {
     const emailExict = await db.collection("users").findOne({"accountData.email": email})
     console.log(emailExict)
-    if (emailExict) throw new Error('blogId');
+    if (emailExict) throw new Error('email');
 }).withMessage('email')
 
-export const loginExictValidate = body('login', ).custom( async (email) => {
-
-    const loginExict = await db.collection("users").findOne({"accountData.login": email})
+export const loginExictValidate = body('login', ).custom( async (login) => {
+    const loginExict = await db.collection("users").findOne({"accountData.login": login})
     console.log(loginExict)
-    if (loginExict)  throw new Error('blogId');
+    if (loginExict)  throw new Error('login');
+}).withMessage('login')
+
+export const emailValidateReg = body('email', ).custom( async (email) => {
+    const emailValid = await db.collection("users").findOne({"accountData.email": email})
+    if (!emailValid)  throw new Error('email');
 }).withMessage('login')
