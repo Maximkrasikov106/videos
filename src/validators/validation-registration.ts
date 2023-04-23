@@ -11,19 +11,19 @@ export const codeValidate = body('code', ).custom( async (code) => {
 }).withMessage('code')
 
 export const emailExictValidate = body('email', ).custom( async (email) => {
-    const emailExict = await db.collection("users").findOne({"accountData.email": email})
+    const emailExict = await db.collection("users").findOne({"email": email})
     console.log(emailExict)
     if (emailExict) throw new Error('email');
 }).withMessage('email')
 
 export const loginExictValidate = body('login', ).custom( async (login) => {
-    const loginExict = await db.collection("users").findOne({"accountData.login": login})
+    const loginExict = await db.collection("users").findOne({"login": login})
     console.log(loginExict)
     if (loginExict)  throw new Error('login');
 }).withMessage('login')
 
 export const emailValidateReg = body('email', ).custom( async (email) => {
-    const emailValid = await db.collection("users").findOne({"accountData.email": email})
+    const emailValid = await db.collection("users").findOne({"email": email})
     if (!emailValid)  throw new Error('email');
     if (emailValid.isComposing == true) throw new Error('email');
 }).withMessage('login')
