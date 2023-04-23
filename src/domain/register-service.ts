@@ -45,7 +45,7 @@ export const registerService = {
     async emailResending(email: string) {
        let user = await  registerDbRepository.findUserForEmail(email)
         if (!user) return false
-        if (user.isComposing == true) return false
+       // if (user.isComposing == true) return false
         await emailManger.sendEmailConfirmMessager(user.accountData.email, user.emailConfirmation.confirmationCode)
         return true
     }
